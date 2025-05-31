@@ -44,13 +44,15 @@ body {
 
 .right h2 {
   margin: 0;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 50px;
+  font-weight: 700;
+  text-align: center;
 }
 
 .right p {
   color: gray;
   margin-bottom: 25px;
+  text-align: center;
 }
 
 .form-group {
