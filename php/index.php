@@ -16,7 +16,7 @@
       if ($user) {
           if ($password == $user['password']) {
               $_SESSION['email'] = $email;
-              echo "<script>alert('login successfully '); window.location.href = 'homepage.html'</script>";
+              echo "<script>alert('login successfully '); window.location.href = 'homepage.php'</script>";
           } else {
               echo "<script>alert('Wrong Password'); window.location.href = 'index.php'</script>";
           }
