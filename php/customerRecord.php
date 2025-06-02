@@ -1,15 +1,15 @@
 <?php
     include('dbconnect.php');
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $role = $_POST['role'];
+        $lastName = $_POST['last_name'];
+        $firstName = $_POST['first_name'];
+        $middleInitial = $_POST['middle_initial'];
+        $address = $_POST['address'];
+        $contactNumber = $_POST['contact_number'];
 
-        $sql = "INSERT INTO accounts VALUES ('','$email', '$password', '$role', '$username')";
+        $sql = "INSERT INTO customerrecords VALUES ('',' $lastName', '$firstName', '$middleInitial', '$address',$contactNumber)";
         
         if (mysqli_query($con, $sql)) {
-
             echo 
             "<script type='text/javascript'>alert('Details submitted successfully!');
             window.location.href = 'homepage.php';

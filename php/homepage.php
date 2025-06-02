@@ -95,7 +95,7 @@ include('dbconnect.php');
   <!-- PARA SA CUSTOMER RECORD -->
   <div class="section" id="recordCustomer">
     <h2>Customer Records</h2>
-    <form>
+    <form action="customerRecord.php" method="POST">
       <label for="last_name">Last Name</label><br>
       <input type="text" id="last_name" name="last_name" required><br>
 
