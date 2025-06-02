@@ -1,5 +1,5 @@
 <?php
-    include("dbconnect.php")
+    include("dbconnect.php");
     $id = $_GET['id'];
     $sql = "SELECT * FROM info WHERE id='$id'";
     $result = $con->query($sql);
