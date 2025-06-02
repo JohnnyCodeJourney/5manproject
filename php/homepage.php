@@ -1,5 +1,6 @@
 <?php
 include('dbconnect.php');
+include('staffRecord.php');
   session_start();
   if (!isset($_SESSION['email'])) {
     header("Location: index.php");
@@ -118,9 +119,10 @@ include('dbconnect.php');
   <!-- PARA SA STAFF RECORD -->
   <div class="section" id="recordStaff">
     <h2>Staff Records</h2>
-    <form>
+    <form action="staffRecord.php" method="POST">
       <label for="staff_id">Staff ID</label><br>
-      <input type="text" id="staff_id" name="staff_id"><br>
+       <input type="text" value="<?php echo $generatedId; ?>" disabled readonly><br>
+      <input type="hidden" name="staff_id" value="<?php echo $generatedId; ?>">
 
       <label for="last_name">Last Name</label><br>
       <input type="text" id="last_name" name="last_name" required><br>
