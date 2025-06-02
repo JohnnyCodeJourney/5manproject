@@ -61,8 +61,7 @@
             <label for="password">Password *</label>
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
         </div>
-        <button class="btn" type="submit">Sign In</button>
-        <button class="btn btn-outline" type="button">Create an account</button>
+        <button class="btn" type="submit">Log In</button>
 
       </form>
     </div>
