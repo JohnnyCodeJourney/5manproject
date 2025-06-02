@@ -171,22 +171,22 @@ include('dbconnect.php');
 
   <!-- PARA SA ADDING NG USER OR ADMIN -->
   <div class="section" id="userSection">
-    <h2>Add New User/Admin</h2>
-    <form>
+    <h2>Add New Staff/Admin</h2>
+    <form action="addUser.php" method="POST">
       <label for="username">Username</label>
       <input type="text" id="username" name="username" required>
-
-      <label for="role">Role</label>
-      <select id="role" name="role" required>
-        <option value="user">Staff</option>
-        <option value="admin">Admin</option>
-      </select>
 
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required>
 
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required>
+
+      <label for="role">Role</label>
+      <select id="role" name="role" required>
+        <option value="Staff">Staff</option>
+        <option value="Admin">Admin</option>
+      </select>
 
       <button type="submit">Add User</button>
     </form>
