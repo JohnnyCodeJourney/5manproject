@@ -30,6 +30,9 @@ include('dbconnect.php');
   <meta charset="UTF-8">
   <title>Dashboard - Car Rental POS</title>
   <link rel="stylesheet" href="../css/homepage.css">
+
+  <!-- Para mapasa ko yung role varianle sa js -->
+  <script>const userRole = "<?php echo $role; ?>";</script>
 </head>
 
 <body>

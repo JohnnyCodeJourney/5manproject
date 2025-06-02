@@ -7,6 +7,14 @@ const user = document.getElementById('userSection');
 const navItems = document.querySelectorAll('.navItem')
 
 
+
+
+// pang role base
+if(userRole == "Staff"){
+  document.getElementById('users_button').style.display = 'none';
+  document.getElementById('staff_button').style.display = 'none';
+}
+
 // para sa active dashboard
 navItems.forEach(item => {
   item.addEventListener('click', () => {
