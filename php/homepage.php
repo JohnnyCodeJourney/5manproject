@@ -1,8 +1,26 @@
 <?php
+include('dbconnect.php');
   session_start();
   if (!isset($_SESSION['email'])) {
     header("Location: index.php");
     exit();
+  }
+
+  $email = $_SESSION['email'];
+
+  $sql = "SELECT username, role FROM accounts WHERE email = ?";
+  $stmt = $con->prepare($sql);
+  $stmt->bind_param("s",$email);
+  $stmt->execute();
+  $result = $stmt->get_result();
+
+  if($result->num_rows > 0){
+    $row = $result->fetch_assoc();
+    $username = $row['username'];
+    $role = $row['role'];
+  }
+  else{
+    $username = "Unknown User";
   }
 ?>
 
@@ -22,7 +40,7 @@
 
       <div class="user-info">
         <img src="../assets/pfp.jpg" alt="pfp" class="pfp">
-        <p>Admin User</p>
+        <p><?php echo htmlspecialchars($role) ?> <?php echo htmlspecialchars($username) ?></p>
       </div>
 
       <nav>
@@ -40,7 +58,7 @@
     <!-- Main Content -->
     <main class="main-content" id="dashboardSection">
       <header>
-        <h1>Welcome, Meng!</h1>
+        <h1>Welcome, <?php echo htmlspecialchars($username) ?></h1>
         <p>Here's what's happening today.</p>
       </header>
 
@@ -154,7 +172,7 @@
 
       <label for="role">Role</label>
       <select id="role" name="role" required>
-        <option value="user">User</option>
+        <option value="user">Staff</option>
         <option value="admin">Admin</option>
       </select>
 
