@@ -4,6 +4,18 @@ const staff = document.getElementById('recordStaff');
 const rentals = document.getElementById('salesSection');
 const report = document.getElementById('reportSection');
 const user = document.getElementById('userSection');
+const navItems = document.querySelectorAll('.navItem')
+
+
+// para sa active dashboard
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+
+    navItems.forEach(i => i.classList.remove('active'));
+
+    item.classList.add('active');
+  });
+});
 
 function hideAll() {
   dashboard.style.display = 'none';

@@ -45,12 +45,12 @@ include('dbconnect.php');
 
       <nav>
         <ul>
-          <li id="dashboard_button" class="active">Dashboard</li>
-          <li id="customers_button">Customers</li>
-          <li id="staff_button">Staff</li>
-          <li id="rentals_button">Daily Rentals</li>
-          <li id="reports_button">Reports</li>
-          <li id="users_button">Users</li>
+          <li id="dashboard_button" class="navItem active">Dashboard</li>
+          <li id="customers_button" class="navItem">Customers</li>
+          <li id="staff_button" class="navItem">Staff</li>
+          <li id="rentals_button" class="navItem">Daily Rentals</li>
+          <li id="reports_button" class="navItem">Reports</li>
+          <li id="users_button" class="navItem">Users</li>
         </ul>
       </nav>
     </aside>
