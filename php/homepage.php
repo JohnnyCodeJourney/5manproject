@@ -50,9 +50,15 @@ include('dbconnect.php');
           <li id="staff_button" class="navItem">Staff</li>
           <li id="rentals_button" class="navItem">Daily Rentals</li>
           <li id="reports_button" class="navItem">Reports</li>
-          <li id="users_button" class="navItem">Users</li>
+          <li id="users_button" class="navItem">Add Users</li>
+          <li id="users_button" class="navItem">Settings</li>
         </ul>
       </nav>
+      <div class="Logout">
+        <form action="logout.php">
+          <button type="submit" class="LogOutBtn">Log Out</button>
+        </form>
+      </div>
     </aside>
 
     <!-- Main Content -->
