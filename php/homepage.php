@@ -37,7 +37,7 @@ include('staffRecord.php');
 </head>
 
 <body>
-  <div class="dashboard-container">
+
     <!-- SIDE NAV NA POSA -->
     <aside class="sidebar">
       <h2>Car Rental POS</h2>
@@ -46,7 +46,6 @@ include('staffRecord.php');
         <img src="../assets/pfp.jpg" alt="pfp" class="pfp">
         <p><?php echo htmlspecialchars($role) ?> <?php echo htmlspecialchars($username) ?></p>
       </div>
-
       <nav>
         <ul>
           <li id="dashboard_button" class="navItem active">Dashboard</li>
@@ -65,7 +64,8 @@ include('staffRecord.php');
       </div>
     </aside>
 
-    <!-- Main Content -->
+
+  <!-- Main Content -->
     <main class="main-content" id="dashboardSection">
       <header>
         <h1>Welcome, <?php echo htmlspecialchars($username) ?></h1>
@@ -91,10 +91,9 @@ include('staffRecord.php');
         </div>
       </section>
     </main>
-  </div>
 
   <!-- PARA SA CUSTOMER RECORD -->
-  <div class="section" id="recordCustomer">
+  <div class="section newCustomer" id="recordCustomer">
     <h2>Customer Records</h2>
     <form action="customerRecord.php" method="POST">
       <label for="last_name">Last Name</label><br>
