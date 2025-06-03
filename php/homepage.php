@@ -34,6 +34,7 @@ include('staffRecord.php');
 
   <!-- Para mapasa ko yung role varianle sa js -->
   <script>const userRole = "<?php echo $role; ?>";</script>
+  <script src="../js/addModal.js" defer></script>
 </head>
 
 <body>
@@ -93,26 +94,163 @@ include('staffRecord.php');
     </main>
 
   <!-- PARA SA CUSTOMER RECORD -->
-  <div class="section newCustomer" id="recordCustomer">
-    <h2>Customer Records</h2>
-    <form action="customerRecord.php" method="POST">
-      <label for="last_name">Last Name</label><br>
-      <input type="text" id="last_name" name="last_name" required><br>
+  <div class="section" id="recordCustomer">
+    <main class="main-content" id="dashboardSection">
+      <header class="dashboard-header">
+        <div class="welcome-section">
+            <h1>Welcome, Meng</h1>
+            <p>Here's what's happening today.</p>
+        </div>
 
-      <label for="first_name">First Name</label><br>
-      <input type="text" id="first_name" name="first_name" required><br>
+        <div class="add-customer" id="openAddCustomerModal">
+            <span>Add Customer</span>
+            <img src="../assets/icons/plus-solid.svg" alt="add icon" class="add-icon">
+        </div>        
 
-      <label for="middle_initial">Middle Initial</label><br>
-      <input type="text" id="middle_initial" name="middle_initial"><br>
+        <!-- Add Customer Modal -->
+        <div id="addCustomerModal" class="modal">
+          <div class="modal-content">
+            <span id="closeAddCustomerModal">&times;</span>
+            <h2 style="margin-top:0;">Add Customer</h2><br>
+            <form>
+              <div class="form-group">
+                <label for="fullName">Full Name</label><br>
+                <input type="text" id="fullName" name="fullName" class="form-input">
+              </div>
+                <div class="form-group">
+                <label for="carType">Car Type</label><br>
+                <select id="carType" name="carType" class="form-input">
+                  <option value="" disabled selected>Select car type</option>
+                  <option value="7 Seaters">7 Seaters</option>
+                  <option value="5 Seaters">5 Seaters</option>
+                  <option value="SUV">SUV</option>
+                  <option value="Sedan">Sedan</option>
+                  <option value="Van">Van</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="location">Location</label><br>
+                <input type="text" id="location" name="location" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="distance">Distance</label><br>
+                <input type="text" id="distance" name="distance" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="daysOfRent">Days of Rent</label><br>
+                <input type="text" id="daysOfRent" name="daysOfRent" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="dateStart">Date Start</label><br>
+                <input type="date" id="dateStart" name="dateStart" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="dateEnd">Date End</label><br>
+                <input type="date" id="dateEnd" name="dateEnd" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="remarks">Remarks</label><br>
+                <input type="text" id="remarks" name="remarks" class="form-input">
+              </div>
+              <button type="submit" class="add-btn">Add</button>
+            </form>
+        </div>
+        
+      </header>
+        <div id="customerList">
+          <h2>Customer List</h2>
+          <table>
+            <thead>
+                <tr>
+                <th>Full Name</th>
+                <th>Car Type</th>
+                <th>Location</th>
+                <th>Distance</th>
+                <th>Destination</th>
+                <th>Days of Rent</th>
+                <th>Date Start</th>
+                <th>Date End</th>
+                <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
 
-      <label for="address">Address</label><br>
-      <input type="text" id="address" name="address" required><br>
+                <tr>
+                <td>John Manoy</td>
+                <td>7 Seaters</td>
+                <td>Gentri </td>
+                <td>19kms</td>
+                <td>Tagaytay</td>
+                <td>5</td>
+                <td>2023-10-01</td>
+                <td>2023-10-06</td>
+                <td>Pending</td>
+                </tr>
 
-      <label for="contact_number">Contact Number</label><br>
-      <input type="text" id="contact_number" name="contact_number" required><br>
+                <tr>
+                <td>Robert Nanalsal</td>
+                <td>7 Seaters</td>
+                <td>Gentri </td>
+                <td>19kms</td>
+                <td>Carmona</td>
+                <td>5</td>
+                <td>2023-10-01</td>
+                <td>2023-10-06</td>
+                <td>Pending</td>
+                </tr>
 
-      <button type="submit">Add Customer</button>
-    </form>
+                <tr>
+                <td>Piel Dedma</td>
+                <td>7 Seaters</td>
+                <td>Gentri </td>
+                <td>19kms</td>
+                <td>Tagaytay</td>
+                <td>5</td>
+                <td>2023-10-01</td>
+                <td>2023-10-06</td>
+                <td>Pending</td>
+                </tr>
+
+                <tr>
+                <td>Lorence Sumalo</td>
+                <td>7 Seaters</td>
+                <td>Gentri </td>
+                <td>19kms</td>
+                <td>Dasmarinas</td>
+                <td>5</td>
+                <td>2023-10-01</td>
+                <td>2023-10-06</td>
+                <td>Pending</td>
+                </tr>
+                
+                <tr>
+                <td>Dredd Pinansala</td>
+                <td>7 Seaters</td>
+                <td>Gentri </td>
+                <td>19kms</td>
+                <td>Imus</td>
+                <td>5</td>
+                <td>2023-10-01</td>
+                <td>2023-10-06</td>
+                <td>Pending</td>
+                </tr>
+
+                <tr>
+                <td>Francis Manansala</td>
+                <td>7 Seaters</td>
+                <td>Gentri </td>
+                <td>19kms</td>
+                <td>Tagaytay</td>
+                <td>5</td>
+                <td>2023-10-01</td>
+                <td>2023-10-06</td>
+                <td>Pending</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+    </main>
+    </div>
   </div>
 
   <!-- PARA SA STAFF RECORD -->
