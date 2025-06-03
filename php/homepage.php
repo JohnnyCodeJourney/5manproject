@@ -98,7 +98,7 @@ include('staffRecord.php');
     <main class="main-content" id="dashboardSection">
       <header class="dashboard-header">
         <div class="welcome-section">
-            <h1>Welcome, Meng</h1>
+            <h1>Welcome, <?php echo htmlspecialchars($username) ?></h1>
             <p>Here's what's happening today.</p>
         </div>
 
@@ -157,7 +157,7 @@ include('staffRecord.php');
         </div>
         
       </header>
-        <div id="customerList">
+        <div  id="customerList">
           <h2>Customer List</h2>
           <table>
             <thead>
