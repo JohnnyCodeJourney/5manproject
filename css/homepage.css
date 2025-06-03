@@ -143,11 +143,38 @@ header p {
 .section{
   display: none;
   padding: 20px;
-  background-color: #cccccc00;
+  background-color: #ccc;
   margin: 20px 40px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   width: 100%;
+}
+
+
+.section form label {
+  font-weight: bold;
+}
+
+.section input,
+.section select {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.section button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.section button:hover {
+  background-color: #0056b3;
 }
 
 /* add customer page */
