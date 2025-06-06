@@ -121,7 +121,7 @@ include('staffRecord.php');
     <h2>Staff Records</h2>
     <form action="staffRecord.php" method="POST">
       <label for="staff_id">Staff ID</label><br>
-       <input type="text" value="<?php echo $generatedId; ?>" disabled readonly><br>
+      <input type="text" value="<?php echo $generatedId; ?>" disabled readonly><br>
       <input type="hidden" name="staff_id" value="<?php echo $generatedId; ?>">
 
       <label for="last_name">Last Name</label><br>
@@ -203,4 +203,10 @@ include('staffRecord.php');
 </html>
 
 <!-- KULANG PA PO NG MGA DESIGN KASI MAG LALABA PA PO AKO -->
+
+
+
 <!-- DILI KO PA PO NAAYOS YUNG RECORD NA PART, DI KO ALAM KUNG PANO GAWIN -->
+
+
+
