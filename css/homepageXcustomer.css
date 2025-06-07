@@ -184,8 +184,8 @@ header p {
 }
 
 .section tr:hover {
-  background-color: #0a4194;
-  color: white;
+  background-color: #909092;
+  color: rgb(5, 5, 5);
 }
 
 /* Add Customer Modal Styling */
