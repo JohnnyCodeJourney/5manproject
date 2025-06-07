@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2025 at 05:03 PM
+-- Generation Time: Jun 07, 2025 at 09:10 PM
 -- Server version: 11.6.2-MariaDB
 -- PHP Version: 8.2.12
 
@@ -68,8 +68,39 @@ CREATE TABLE `customerinfo` (
 --
 
 INSERT INTO `customerinfo` (`customerID`, `LastName`, `FirstName`, `MiddleName`, `province`, `city`, `barangay`, `detailedAddress`, `contact`, `addedBy`) VALUES
-(3, 'Domasian', 'Dredd', 'Villarba', 'CAVITE', 'GENERAL TRIAS', 'Buenavista I', 'Il Giardino Residences, Livorno Street, blk16 lot 46', '09272483891', 'KUPALIN'),
-(4, 'Nanalsal', 'Robert', 'ey', 'CAVITE', 'GENERAL TRIAS', 'Pasong Camachile I', 'basta sa grs sila', '05646587351', 'Dredd');
+(6, 'Domasian', 'Cley', 'Villarba', 'CAVITE', 'GENERAL TRIAS', 'Buenavista I', 'IG', '0560844548', 'KUPALIN'),
+(7, 'Domasian', 'Dredd', 'Villarba', 'BATANGAS', 'NASUGBU', 'Latag', 'Damulag kay kakang reyne', '09272483891', 'YoungDon'),
+(9, 'magalulo', 'francis', 'middleMan', 'TARLAC', 'CITY OF TARLAC (Capital)', 'Batang-batang', 'ilaya', '065768752', 'Dredd'),
+(10, 'burak', 'rubert', 'pagsanghan', 'BATANGAS', 'MABINI', 'Poblacion', 'kapatagan', '08945654', 'Dredd'),
+(11, 'aywan sayo ya', 'jrizz', 'bengbeng', 'BENGUET', 'BAKUN', 'Ampusongan', 'vengvang', '089245', 'Dredd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rental`
+--
+
+CREATE TABLE `rental` (
+  `rentalID` int(11) NOT NULL,
+  `customerID` int(11) DEFAULT NULL,
+  `carType` varchar(250) DEFAULT NULL,
+  `ratePerDay` decimal(10,2) DEFAULT NULL,
+  `numberOfDays` int(11) DEFAULT NULL,
+  `total` decimal(10,2) DEFAULT NULL,
+  `dateStart` date DEFAULT NULL,
+  `dateEnd` date DEFAULT NULL,
+  `addedBy` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rental`
+--
+
+INSERT INTO `rental` (`rentalID`, `customerID`, `carType`, `ratePerDay`, `numberOfDays`, `total`, `dateStart`, `dateEnd`, `addedBy`) VALUES
+(7, 7, 'SEDAN', 500.00, 5, 2500.00, '2025-06-10', '2025-06-15', 'Dredd'),
+(8, 7, 'VAN', 55.00, 3, 165.00, '2025-06-07', '2025-06-10', 'Dredd'),
+(9, 11, 'SEDAN', 55.00, 6, 330.00, '2025-06-12', '2025-06-18', 'Dredd'),
+(10, 11, 'SEDAN', 500.00, 9, 4500.00, '2025-06-13', '2025-06-22', 'KUPALIN');
 
 -- --------------------------------------------------------
 
@@ -112,6 +143,13 @@ ALTER TABLE `customerinfo`
   ADD PRIMARY KEY (`customerID`);
 
 --
+-- Indexes for table `rental`
+--
+ALTER TABLE `rental`
+  ADD PRIMARY KEY (`rentalID`),
+  ADD KEY `customerID` (`customerID`);
+
+--
 -- Indexes for table `staffrecords`
 --
 ALTER TABLE `staffrecords`
@@ -131,7 +169,23 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `customerinfo`
 --
 ALTER TABLE `customerinfo`
-  MODIFY `customerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `customerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `rental`
+--
+ALTER TABLE `rental`
+  MODIFY `rentalID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `rental`
+--
+ALTER TABLE `rental`
+  ADD CONSTRAINT `rental_ibfk_1` FOREIGN KEY (`customerID`) REFERENCES `customerinfo` (`customerID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
