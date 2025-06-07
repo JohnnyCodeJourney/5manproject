@@ -113,17 +113,6 @@ function updateTotalAndEndDate() {
   }
 }
 
-const rentalForm = document.getElementById('rentalFormId'); 
-rentalForm.addEventListener('submit', function (e) {
-  const customerID = document.getElementById('selectedCustomerID').value;
-
-  if (!customerID) {
-    e.preventDefault();
-    alert('Please select a customer before submitting the rental.');
-    return;
-  }
-});
-
 rateInput.addEventListener('input', updateTotalAndEndDate);
 daysInput.addEventListener('input', updateTotalAndEndDate);
 dateStartInput.addEventListener('input', updateTotalAndEndDate);
