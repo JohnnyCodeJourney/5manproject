@@ -29,6 +29,16 @@
   if (!$result1) {
     die("Query failed: " . mysqli_error($con));
   }
+
+  $sql2 = "SELECT COUNT(*) as totalCustomer FROM customerinfo";
+  $result2 = $con->query($sql2);
+  if (!$result2) {
+    die("Query failed: " . mysqli_error($con));
+  }
+  
+  $row2 = $result2->fetch_assoc();
+  $totalCustomer = $row2['totalCustomer'];
+  
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +93,7 @@
       <section class="cards">
         <div class="card">
           <h3>Total Customers</h3>
-          <p>215</p>
+          <p><?php echo htmlspecialchars($totalCustomer) ?></p>
         </div>
         <div class="card">
           <h3>Total Staff</h3>
