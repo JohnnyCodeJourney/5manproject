@@ -38,7 +38,14 @@
   
   $row2 = $result2->fetch_assoc();
   $totalCustomer = $row2['totalCustomer'];
-  
+
+  $sql3 = "SELECT r.rentalID, c.customerID, CONCAT(c.firstName, ' ', c.lastName) AS fullName,
+          r.carType, r.ratePerDay, r.numberOfDays, r.total, CONCAT(DATE_FORMAT(r.dateStart, '%b %d, %Y'), ' - ', DATE_FORMAT(r.dateEnd, '%b %d, %Y')) AS dateDuration, r.addedBy
+        FROM rental r JOIN customerinfo c ON r.customerID = c.customerID ORDER BY r.dateStart DESC";
+  $result3 = $con->query($sql3);
+  if (!$result3) {
+    die("Query failed: " . mysqli_error($con));
+  }
 ?>
 
 <!DOCTYPE html>
@@ -67,9 +74,9 @@
       <nav>
         <ul>
           <li id="dashboard_button" class="navItem active">Dashboard</li>
-          <li id="customers_button" class="navItem">Customers</li>
+          <li id="customers_button" class="navItem">Add Customers</li>
+          <li id="rentals_button" class="navItem">Add Rentals</li>
           <li id="staff_button" class="navItem">Staff</li>
-          <li id="rentals_button" class="navItem">Daily Rentals</li>
           <li id="reports_button" class="navItem">Reports</li>
           <li id="users_button" class="navItem">Add Users</li>
           <li id="users_button" class="navItem">Settings</li>
@@ -302,6 +309,241 @@
     </div>
   </div>
 
+
+
+
+  
+<!-- PARA SA RENTALS -->
+  <div class="section" id="salesSection">
+    <main class="main-content">
+      <header class="dashboard-header">
+        <div class="welcome-section">
+            <h1>Welcome, <?php echo htmlspecialchars($username) ?></h1>
+            <p>Here's what's happening today.</p>
+        </div>
+        <div class="add-customer" id="openAddRentals">
+            <span>Add Rentals</span>
+            <img src="../assets/icons/plus-solid.svg" alt="add icon" class="add-icon">
+        </div>        
+
+        <!-- Add Rental Modal -->
+        <div id="addRentalsModal" class="modal">
+          <div class="modal-content">
+            <div class="upperPosition">
+              <div><h2 style="margin-top:0;">Rent Information</h><br></div>
+              <div><span id="closeRentInformation">&times;</span></div>
+            </div>
+            <form action="InsertRental.php" method="POST" id="rentalFormId">
+              <div class="customerSelection">
+                <div class="labelDiv">
+                  <label>Customer ID</label>
+                  <input type="text" id="selectedCustomerID" name="customerID" readonly required>
+                </div>
+                <div class="labelDiv">
+                  <label>Full Name</label>
+                  <input type="text" id="selectedCustomerName" readonly required>
+                </div>
+                <div class="labelDiv">
+                  <label>Contact</label>
+                <input type="text" id="selectedCustomerContact" readonly required>
+                </div>
+                
+              </div>
+              <div class="customerSelection">
+                  <button type="button" id="openCustomerModal">Choose Customer</button>
+                </div>
+              <div>
+                <h2 style="margin-top:0;">Select Car & Dates</h2><br>
+              </div>
+              <div class="cargroup">
+                <div>
+                  <label for="carType">Car Type</label><br>
+                  <select id="carType" name="carType" class="form-input">
+                    <option value="" disabled selected>Select car type</option>
+                    <option value="SUV">SUV</option>
+                    <option value="SEDAN">Sedan</option>
+                    <option value="VAN">Van</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="rate">Rate per day</label><br>
+                  <input type="number" step="0.01" id="rate" name="rate" required>
+                </div>
+              </div>
+              
+              <div class="totalgroup">
+                <div>
+                  <label for="Number of Days">Number of Days</label><br>
+                  <input type="number" step="1" id="numberOfDays" name="numberOfDays" required>
+                </div>
+                <div>
+                  <label for="total">Total</label><br>
+                  <input type="text" id="totalDisplay" disabled readonly>
+                  <input type="hidden" name="total" id="total">
+                </div>
+              </div>
+              <div class="dates">
+                <div class="dategroup">
+                  <label for="dateStart">Date Start</label><br>
+                  <input type="date" id="dateStart" name="dateStart">
+                </div>
+                <div class="dategroup">
+                  <label for="dateEnd">Date End</label><br>
+                  <input type="date" id="dateEnd" name="dateEnd" disabled readonly>
+                  <input type="hidden" id="dateEnd1" name="dateEnd1">
+                </div>
+              </div>
+              <div class="modalButtons">
+                <button type="submit" class="add-btn">Add</button>
+                <button id="cancelRent" type="button">Cancel</button>
+              </div>
+            </form>
+        </div>
+        <!-- Select Customer -->
+        <div id="selectCustomerModal" class="modal">
+          <div class="modal-content">
+            <span class="close" id="closeCustomerModal">&times;</span>
+            <h2>Select Customer</h2>
+            <input type="text" id="searchCustomer" placeholder="Search by name or contact..." style="width: 100%; margin-bottom: 10px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer ID</th>
+                  <th>Full Name</th>
+                  <th>Contact</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="customerTableBody">
+                <?php
+                  $result = $con->query("SELECT customerID, FirstName, MiddleName, LastName, contact FROM customerinfo");
+                  while ($row = $result->fetch_assoc()) {
+                    $fullName = htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName']);
+                    echo '
+                      <tr>
+                        <td>' . htmlspecialchars($row['customerID']) . '</td>
+                        <td>' . $fullName . '</td>
+                        <td>' . htmlspecialchars($row['contact']) . '</td>
+                        <td><button type="button" onclick="selectCustomer(' . $row['customerID'] . ', \'' . $fullName . '\', \'' . $row['contact'] . '\')">Select</button></td>
+                      </tr>
+                    ';
+                  }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- TABLE -->
+      </header>
+        <div id="customerList">
+          <h2>Rental List</h2>
+          <?php
+           if ($result3->num_rows > 0) {
+            echo '
+              <table>
+                <thead>
+                    <tr>
+                      <th>Rental ID</th>
+                      <th>Full Name</th>
+                      <th>Car Type</th>
+                      <th>Rate Per Day</th>
+                      <th>Number of Days</th>
+                      <th>Total</th>
+                      <th>Date Duration</th>
+                      <th>Added by</th>
+                      <th class="actionsTD" >Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+              ';
+              while ($row3 = $result3->fetch_assoc()) {
+                  echo '
+                    <tr>
+                        <td>' . htmlspecialchars($row3['rentalID']) . '</td>
+                        <td>' . htmlspecialchars($row3['fullName']) . '</td>
+                        <td>' . htmlspecialchars($row3['carType']) . '</td>
+                        <td>' . htmlspecialchars($row3['ratePerDay']) . '</td>
+                        <td>' . htmlspecialchars($row3['numberOfDays']) . '</td>
+                        <td>' . htmlspecialchars($row3['total']) . '</td>
+                        <td>' . htmlspecialchars($row3['dateDuration']) . '</td>
+                        <td>' . htmlspecialchars($row3['addedBy']) . '</td>
+                        <td class="actionsTD">
+                          <div class="actionsDiv">
+                            <div class="actionsDiv">
+                              <div>
+                                <img src="../assets/icons/edit.png" alt="edit" class="editBtn"
+                              </div>
+                              <div>
+                                <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn"
+                              </div>
+                          </div>
+                        </td>
+                    </tr>
+                  ';
+              }
+              echo '
+                </tbody>
+              </table>';
+            } else {
+                echo '<p class="noRecords">No records found.</p>';
+            }
+
+          ?>
+          <div id="editModal" class="modal" style="display:none;">
+            <div class="modal-content">
+               <div class="upperPosition">
+                <div><h2 style="margin-top:0;">Edit Customer</h><br></div>
+                <div><span class="closeModal">&times;</span></div>
+            </div>
+              <form id="editForm" method="POST" action="editCustomer.php">
+                <input type="hidden" name="customerID" id="editID">
+                <div class="name">
+                <div class="nameGroup">
+                  <label>Last Name</label>
+                  <input type="text" name="lastName" id="editLastName">
+                </div>
+                <div class="nameGroup">
+                  <label>First Name: <input type="text" name="firstName" id="editFirstName"></label>
+                </div>
+                <div class="nameGroup middleName">
+                  <label>Middle Name: <input type="text" name="middleName" id="editMiddleName"></label>
+                </div>
+              </div>
+
+              <div>
+                <h2 style="margin-top:0;">Address</h2><br>
+              </div>
+
+              <div class="addressDiv">
+                <div class="addressgroup">
+                  <label>Province: <input type="text" name="province" id="editProvince"></label>
+                </div>
+                <div class="addressgroup">
+                  <label>City: <input type="text" name="city" id="editCity"></label>
+                </div>
+                <div class="addressgroup">
+                  <label>Barangay: <input type="text" name="barangay" id="editBarangay"></label>
+                </div>
+              </div>
+              <div class="detailedAdd">
+                  <div>
+                    <label>Detailed Address: <input type="text" name="detailedAdd" id="editDetailed"></label>
+                  </div>
+                  <div>
+                    <label>Contact: <input type="text" name="contact" id="editContact"></label>
+                  </div>
+ 
+              </div>
+              <div class="modalButtons">
+                <button type="submit">Save Changes</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </main>
+  </div>
+
   <!-- PARA SA STAFF RECORD -->
   <div class="section" id="recordStaff">
     <h2>Staff Records</h2>
@@ -332,26 +574,6 @@
     </form>
   </div>
 
-  <!-- PARA SA DAILY SALES -->
-  <div class="section" id="salesSection">
-    <h2>Daily Sales</h2>
-    <form>
-      
-      <label for="date">Date</label><br>
-      <input type="text" id="date" name="date" value="Auto-generated" readonly><br>
-
-      <label for="customer_name">Customer Name</label><br>
-      <input type="text" id="customer_name" name="customer_name" required><br>
-
-      <label for="price">Price</label><br>
-      <input type="number" id="price" name="price" required><br>
-
-      <label for="total_sales">Total Sales for the Day</label><br>
-      <input type="number" id="total_sales" name="total_sales"><br>
-
-      <button type="submit">Add Sale</button>
-    </form>
-  </div>
 
   <!-- PARA SA CUSTOMER RECORD -->
   <div class="section" id="reportSection">

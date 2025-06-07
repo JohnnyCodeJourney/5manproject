@@ -270,7 +270,7 @@ tr:hover {
   min-height: 70vh;
   
 }
-.modal {
+.modal{
   display: none;
   position: fixed;
   z-index: 1000;
@@ -300,20 +300,20 @@ tr:hover {
   flex-direction: row;
   justify-content: space-between;
 }
-#closeAddCustomerModal {
+#closeAddCustomerModal,#closeRentInformation {
   font-size: 1.5rem;
   cursor: pointer;
 }
 .modal-content form label{
   font-weight: 500;
 }
-form .name,form .addressDiv,.cargroup,.totalgroup,.dates,.detailedAdd{
+form .name,form .addressDiv,.cargroup,.totalgroup,.dates,.detailedAdd,.customerSelection{
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 2%;
 }
-form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup{
+form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup,.customerSelection .labelDiv{
   width: 100%;
 }
 .detailedAdd div{
@@ -346,4 +346,7 @@ form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup{
 .closeModal{
   cursor: pointer;
   font-size: 30px;
+}
+#openCustomerModal{
+  width: 100%;
 }
