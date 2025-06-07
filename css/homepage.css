@@ -161,7 +161,7 @@ header p {
 
 .section button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #2c3e50;
   color: white;
   border: none;
   border-radius: 4px;
@@ -231,30 +231,31 @@ header p {
 
 
 
-.section table {
+table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-.section th,
-.section td {
-  border: 1px solid #ddd;
+th,
+td {
+  border-top: 1px solid #ddd;
   padding: 10px;
-  text-align: left;
+  text-align: center;
 }
 
-.section th {
-  background-color: #f4f4f4;
+th {
+  background-color: #5c7791;
   font-weight: bold;
+  color: #fcf9f9;
 }
 
-.section tr:nth-child(even) {
-  background-color: #f9f9f9;
+tr:nth-child(even) {
+  background-color: #d8e1eb;
 }
 
-.section tr:hover {
-  background-color: #909092;
+tr:hover {
+  background-color: #7ab0e263;
   color: rgb(5, 5, 5);
 }
 
@@ -272,8 +273,8 @@ header p {
   z-index: 1000;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: rgba(0,0,0,0.4);
   align-items: center;
   justify-content: center;
@@ -283,40 +284,41 @@ header p {
   background: #fff;
   padding: 2rem;
   border-radius: 10px;
-  min-width: 320px;
-  max-width: 120vw;
+  width: 50%;
   box-shadow: 0 2px 16px rgba(0,0,0,0.2);
-  position: relative;
 }
 
 #openAddCustomerModal {
   cursor:pointer;
 }
 
-#closeAddCustomerModal  {
-  position: absolute;
-  top: 10px;
-  right: 16px;
+.upperPosition{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#closeAddCustomerModal {
   font-size: 1.5rem;
   cursor: pointer;
 }
-
-.form-group {
-  margin-bottom: 1rem;
+.modal-content form label{
+  font-weight: 500;
 }
-
-.form-input {
+form .name,form .addressDiv,.cargroup,.totalgroup,.dates{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2%;
+}
+form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup{
   width: 100%;
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
 }
-              
-.add-btn {
-  background: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
+
+.modalButtons{
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  gap: 2%;
 }
+
+

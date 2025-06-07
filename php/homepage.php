@@ -34,7 +34,8 @@ include('staffRecord.php');
 
   <!-- Para mapasa ko yung role varianle sa js -->
   <script>const userRole = "<?php echo $role; ?>";</script>
-  <script src="../js/addModal.js" defer></script>
+  
+  <script src="../js/address.js" defer></script>
 </head>
 
 <body>
@@ -110,142 +111,77 @@ include('staffRecord.php');
         <!-- Add Customer Modal -->
         <div id="addCustomerModal" class="modal">
           <div class="modal-content">
-            <span id="closeAddCustomerModal">&times;</span>
-            <h2 style="margin-top:0;">Add Customer</h2><br>
+            <div class="upperPosition">
+              <div><h2 style="margin-top:0;">Customer Information</h><br></div>
+              <div><span id="closeAddCustomerModal">&times;</span></div>
+            </div>
             <form>
-              <div class="form-group">
-                <label for="fullName">Full Name</label><br>
-                <input type="text" id="fullName" name="fullName" class="form-input">
+              <div class="name">
+                <div class="nameGroup">
+                  <label for="Last Name">Last Name</label><br>
+                  <input type="text" id="lastName" name="lastName" class="form-input">
+                </div>
+                <div class="nameGroup">
+                  <label for="First Name">First Name</label><br>
+                  <input type="text" id="firstName" name="firstName" class="form-input">
+                </div>
+                <div class="nameGroup middleName">
+                  <label for="Middle Name">Middle Name</label><br>
+                  <input type="text" id="middleName" name="middleName">
+                </div>
               </div>
-                <div class="form-group">
-                <label for="carType">Car Type</label><br>
-                <select id="carType" name="carType" class="form-input">
-                  <option value="" disabled selected>Select car type</option>
-                  <option value="7 Seaters">7 Seaters</option>
-                  <option value="5 Seaters">5 Seaters</option>
-                  <option value="SUV">SUV</option>
-                  <option value="Sedan">Sedan</option>
-                  <option value="Van">Van</option>
-                </select>
+
+
+              <div>
+                <h2 style="margin-top:0;">Address</h2><br>
               </div>
-              <div class="form-group">
-                <label for="location">Location</label><br>
-                <input type="text" id="location" name="location" class="form-input">
+
+
+              <div class="addressDiv">
+                <div class="addressgroup">
+                  <label for="Province">Province</label><br>
+                  <select id="province"></select>
+                </div>
+                <div class="addressgroup">
+                  <label for="City/Municipality">City/Municipality</label><br>
+                  <select id="city"></select>
+                </div>
+                <div class="addressgroup">
+                  <label for="Barangay">Barangay</label><br>
+                  <select id="barangay"></select>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="distance">Distance</label><br>
-                <input type="text" id="distance" name="distance" class="form-input">
+              <div class="detailedAdd">
+                 <label>Detailed Address</label><br>
+                 <input type="text" name="detailedAdd" id="detailedAdd">
+                 <label>Detailed Address</label><br>
+                 <input type="text" name="detailedAdd" id="detailedAdd">
               </div>
-              <div class="form-group">
-                <label for="daysOfRent">Days of Rent</label><br>
-                <input type="text" id="daysOfRent" name="daysOfRent" class="form-input">
+              <div class="modalButtons">
+                <button type="submit" class="add-btn">Add</button>
+                <button id="cancelBTN" type="button">Cancel</button>
               </div>
-              <div class="form-group">
-                <label for="dateStart">Date Start</label><br>
-                <input type="date" id="dateStart" name="dateStart" class="form-input">
-              </div>
-              <div class="form-group">
-                <label for="dateEnd">Date End</label><br>
-                <input type="date" id="dateEnd" name="dateEnd" class="form-input">
-              </div>
-              <div class="form-group">
-                <label for="remarks">Remarks</label><br>
-                <input type="text" id="remarks" name="remarks" class="form-input">
-              </div>
-              <button type="submit" class="add-btn">Add</button>
+              
             </form>
         </div>
         
       </header>
-        <div  id="customerList">
+        <div id="customerList">
           <h2>Customer List</h2>
           <table>
             <thead>
                 <tr>
-                <th>Full Name</th>
-                <th>Car Type</th>
-                <th>Location</th>
-                <th>Distance</th>
-                <th>Destination</th>
-                <th>Days of Rent</th>
-                <th>Date Start</th>
-                <th>Date End</th>
-                <th>Remarks</th>
+                  <th>Full Name</th>
+                  <th>Address</th>
+                  <th>Phone Number</th>
                 </tr>
             </thead>
             <tbody>
-
-                <tr>
-                <td>John Manoy</td>
-                <td>7 Seaters</td>
-                <td>Gentri </td>
-                <td>19kms</td>
-                <td>Tagaytay</td>
-                <td>5</td>
-                <td>2023-10-01</td>
-                <td>2023-10-06</td>
-                <td>Pending</td>
-                </tr>
-
-                <tr>
-                <td>Robert Nanalsal</td>
-                <td>7 Seaters</td>
-                <td>Gentri </td>
-                <td>19kms</td>
-                <td>Carmona</td>
-                <td>5</td>
-                <td>2023-10-01</td>
-                <td>2023-10-06</td>
-                <td>Pending</td>
-                </tr>
-
-                <tr>
-                <td>Piel Dedma</td>
-                <td>7 Seaters</td>
-                <td>Gentri </td>
-                <td>19kms</td>
-                <td>Tagaytay</td>
-                <td>5</td>
-                <td>2023-10-01</td>
-                <td>2023-10-06</td>
-                <td>Pending</td>
-                </tr>
-
-                <tr>
-                <td>Lorence Sumalo</td>
-                <td>7 Seaters</td>
-                <td>Gentri </td>
-                <td>19kms</td>
-                <td>Dasmarinas</td>
-                <td>5</td>
-                <td>2023-10-01</td>
-                <td>2023-10-06</td>
-                <td>Pending</td>
-                </tr>
-                
-                <tr>
-                <td>Dredd Pinansala</td>
-                <td>7 Seaters</td>
-                <td>Gentri </td>
-                <td>19kms</td>
-                <td>Imus</td>
-                <td>5</td>
-                <td>2023-10-01</td>
-                <td>2023-10-06</td>
-                <td>Pending</td>
-                </tr>
-
-                <tr>
-                <td>Francis Manansala</td>
-                <td>7 Seaters</td>
-                <td>Gentri </td>
-                <td>19kms</td>
-                <td>Tagaytay</td>
-                <td>5</td>
-                <td>2023-10-01</td>
-                <td>2023-10-06</td>
-                <td>Pending</td>
-                </tr>
+               <tr>
+                  <td>Dredd V. Domasian</td>
+                  <td>Buenavista 1, General Trias, Cavite</td>
+                  <td>09272483891</td>
+               </tr>
             </tbody>
           </table>
         </div>
@@ -336,6 +272,7 @@ include('staffRecord.php');
 
 <!-- SCRIPT PARA SA BUONG HOMEPAGE NAKA BUKOD NG FILE PARA MAS ATTRACTIVE TINGNAN  -->
   <script src="../js/homepage.js"></script>
+  <script src="../js/addModal.js" defer></script>
 </body>
 </html>
 
