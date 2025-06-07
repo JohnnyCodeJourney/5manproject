@@ -178,7 +178,6 @@
       </header>
         <div id="customerList">
           <h2>Customer List</h2>
-          <span id="closeAddCustomerModal">&times;</span>
           <?php
            if ($result1->num_rows > 0) {
             echo '
@@ -207,8 +206,23 @@
                         <td>' . htmlspecialchars($row['addedBy']) . '</td>
                         <td>
                           <div class="actionsDiv">
-                            <div><img src="../assets/icons/edit.png" alt="edit"></div>
-                            <div><img src="../assets/icons/delete.png" alt="delete"></div>
+                            <div class="actionsDiv">
+                              <div>
+                                <img src="../assets/icons/edit.png" alt="edit" class="editBtn"
+                                    data-id="' . $row['customerID'] . '"
+                                    data-lname="' . htmlspecialchars($row['LastName']) . '"
+                                    data-fname="' . htmlspecialchars($row['FirstName']) . '"
+                                    data-mname="' . htmlspecialchars($row['MiddleName']) . '"
+                                    data-province="' . htmlspecialchars($row['province']) . '"
+                                    data-city="' . htmlspecialchars($row['city']) . '"
+                                    data-barangay="' . htmlspecialchars($row['barangay']) . '"
+                                    data-detailed="' . htmlspecialchars($row['detailedAddress']) . '"
+                                    data-contact="' . htmlspecialchars($row['contact']) . '">
+                              </div>
+                              <div>
+                                <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn"
+                                    data-id="' . $row['customerID'] . '">
+                              </div>
                           </div>
                         </td>
                     </tr>
@@ -222,7 +236,57 @@
             }
 
           ?>
-          
+          <div id="editModal" class="modal" style="display:none;">
+            <div class="modal-content">
+               <div class="upperPosition">
+                <div><h2 style="margin-top:0;">Edit Customer</h><br></div>
+                <div><span class="closeModal">&times;</span></div>
+            </div>
+              <form id="editForm" method="POST" action="editCustomer.php">
+                <input type="hidden" name="customerID" id="editID">
+                <div class="name">
+                <div class="nameGroup">
+                  <label>Last Name</label>
+                  <input type="text" name="lastName" id="editLastName">
+                </div>
+                <div class="nameGroup">
+                  <label>First Name: <input type="text" name="firstName" id="editFirstName"></label>
+                </div>
+                <div class="nameGroup middleName">
+                  <label>Middle Name: <input type="text" name="middleName" id="editMiddleName"></label>
+                </div>
+              </div>
+
+              <div>
+                <h2 style="margin-top:0;">Address</h2><br>
+              </div>
+
+              <div class="addressDiv">
+                <div class="addressgroup">
+                  <label>Province: <input type="text" name="province" id="editProvince"></label>
+                </div>
+                <div class="addressgroup">
+                  <label>City: <input type="text" name="city" id="editCity"></label>
+                </div>
+                <div class="addressgroup">
+                  <label>Barangay: <input type="text" name="barangay" id="editBarangay"></label>
+                </div>
+              </div>
+              <div class="detailedAdd">
+                  <div>
+                    <label>Detailed Address: <input type="text" name="detailedAdd" id="editDetailed"></label>
+                  </div>
+                  <div>
+                    <label>Contact: <input type="text" name="contact" id="editContact"></label>
+                  </div>
+ 
+              </div>
+              <div class="modalButtons">
+                <button type="submit">Save Changes</button>
+              </div>
+              </form>
+            </div>
+          </div>
         </div>
     </main>
     </div>

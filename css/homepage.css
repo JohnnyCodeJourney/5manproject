@@ -338,3 +338,12 @@ form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup{
   flex-direction: row;
   gap: 2%;
 }
+#editModal{
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.closeModal{
+  cursor: pointer;
+  font-size: 30px;
+}
