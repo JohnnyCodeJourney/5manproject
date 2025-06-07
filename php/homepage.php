@@ -190,7 +190,7 @@
                       <th>Detailed Address</th>
                       <th>Phone Number</th>
                       <th>Added By</th>
-                      <th>Actions</th>
+                      <th class="actionsTD" >Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -204,7 +204,7 @@
                         <td>' . htmlspecialchars($row['detailedAddress']) . '</td>
                         <td>' . htmlspecialchars($row['contact']) . '</td>
                         <td>' . htmlspecialchars($row['addedBy']) . '</td>
-                        <td>
+                        <td class="actionsTD">
                           <div class="actionsDiv">
                             <div class="actionsDiv">
                               <div>
@@ -375,7 +375,7 @@
   </div>
 
 <!-- SCRIPT PARA SA BUONG HOMEPAGE NAKA BUKOD NG FILE PARA MAS ATTRACTIVE TINGNAN  -->
-  <script src="../js/homepage.js"></script>
+  <script src="../js/homepage.js" defer></script>
   <script src="../js/addModal.js" defer></script>
 </body>
 </html>

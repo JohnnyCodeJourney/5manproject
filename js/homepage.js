@@ -4,7 +4,8 @@ const staff = document.getElementById('recordStaff');
 const rentals = document.getElementById('salesSection');
 const report = document.getElementById('reportSection');
 const user = document.getElementById('userSection');
-const navItems = document.querySelectorAll('.navItem')
+const navItems = document.querySelectorAll('.navItem');
+const actionsTD = document.querySelectorAll('.actionsTD');
 
 
 
@@ -13,6 +14,9 @@ const navItems = document.querySelectorAll('.navItem')
 if(userRole == "Staff"){
   document.getElementById('users_button').style.display = 'none';
   document.getElementById('staff_button').style.display = 'none';
+  actionsTD.forEach(el => {
+    el.style.display = 'none';
+  });
 }
 
 // para sa active dashboard
