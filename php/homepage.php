@@ -1,6 +1,5 @@
 <?php
-include('dbconnect.php');
-include('staffRecord.php');
+  include('dbconnect.php');
   session_start();
   if (!isset($_SESSION['email'])) {
     header("Location: index.php");
@@ -22,6 +21,12 @@ include('staffRecord.php');
   }
   else{
     $username = "Unknown User";
+  }
+
+  $sql1 = "SELECT * FROM customerinfo";
+  $result1 = $con->query($sql1);
+  if (!$result1) {
+    die("Query failed: " . mysqli_error($con));
   }
 ?>
 
@@ -115,7 +120,7 @@ include('staffRecord.php');
               <div><h2 style="margin-top:0;">Customer Information</h><br></div>
               <div><span id="closeAddCustomerModal">&times;</span></div>
             </div>
-            <form>
+            <form action="addCustomerInfo.php" method="POST">
               <div class="name">
                 <div class="nameGroup">
                   <label for="Last Name">Last Name</label><br>
@@ -136,26 +141,30 @@ include('staffRecord.php');
                 <h2 style="margin-top:0;">Address</h2><br>
               </div>
 
-
               <div class="addressDiv">
                 <div class="addressgroup">
                   <label for="Province">Province</label><br>
-                  <select id="province"></select>
+                  <select id="province" name="province"></select>
                 </div>
                 <div class="addressgroup">
                   <label for="City/Municipality">City/Municipality</label><br>
-                  <select id="city"></select>
+                  <select id="city" name="city"></select>
                 </div>
                 <div class="addressgroup">
                   <label for="Barangay">Barangay</label><br>
-                  <select id="barangay"></select>
+                  <select id="barangay" name="barangay"></select>
                 </div>
               </div>
               <div class="detailedAdd">
-                 <label>Detailed Address</label><br>
-                 <input type="text" name="detailedAdd" id="detailedAdd">
-                 <label>Detailed Address</label><br>
-                 <input type="text" name="detailedAdd" id="detailedAdd">
+                  <div>
+                    <label>Detailed Address</label><br>
+                    <input type="text" name="detailedAdd" id="detailedAdd">
+                  </div>
+                  <div>
+                    <label>Contact Number</label><br>
+                    <input type="text" name="contact" id="contact">
+                  </div>
+ 
               </div>
               <div class="modalButtons">
                 <button type="submit" class="add-btn">Add</button>
@@ -164,26 +173,42 @@ include('staffRecord.php');
               
             </form>
         </div>
-        
+        <!-- TABLE -->
       </header>
         <div id="customerList">
           <h2>Customer List</h2>
-          <table>
-            <thead>
-                <tr>
-                  <th>Full Name</th>
-                  <th>Address</th>
-                  <th>Phone Number</th>
-                </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>Dredd V. Domasian</td>
-                  <td>Buenavista 1, General Trias, Cavite</td>
-                  <td>09272483891</td>
-               </tr>
-            </tbody>
-          </table>
+          <?php
+            if ($result1->num_rows > 0){
+               while ($row = $result1->fetch_assoc()){
+                echo '
+                <table>
+                  <thead>
+                      <tr>
+                        <th>Customer ID</th>
+                        <th>Full Name</th>
+                        <th>Address</th>
+                        <th>Detailed Address</th>
+                        <th>Phone Number</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <td>'.htmlspecialchars($row['customerID']).'</td>
+                        <td>'.htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ', ' . $row['MiddleName']).'</td>
+                        <td>'.htmlspecialchars($row['province'] . ', ' . $row['city'] . ' ' . $row['barangay']).'</td>
+                        <td>'.htmlspecialchars($row['detailedAddress']).'</td>
+                        <td>'.htmlspecialchars($row['contact']).'</td>
+                    </tr>
+                  </tbody>
+                </table>';
+               }
+              
+            }
+           else {
+                echo '<p class="noRecords">No records found.</p>';
+            }
+          ?>
+          
         </div>
     </main>
     </div>

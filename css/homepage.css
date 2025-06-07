@@ -234,6 +234,7 @@ header p {
 table {
   width: 100%;
   border-collapse: collapse;
+  border: 1px solid rgba(0, 0, 0, 0.13);
   margin-top: 20px;
 }
 
@@ -266,6 +267,8 @@ tr:hover {
   margin-top: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 70vh;
+  
 }
 .modal {
   display: none;
@@ -304,7 +307,7 @@ tr:hover {
 .modal-content form label{
   font-weight: 500;
 }
-form .name,form .addressDiv,.cargroup,.totalgroup,.dates{
+form .name,form .addressDiv,.cargroup,.totalgroup,.dates,.detailedAdd{
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -313,12 +316,21 @@ form .name,form .addressDiv,.cargroup,.totalgroup,.dates{
 form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup{
   width: 100%;
 }
-
+.detailedAdd div{
+  width: 32%;
+}
+.detailedAdd{
+  justify-content: left;
+}
 .modalButtons{
   display: flex;
   flex-direction: row;
   justify-content: end;
   gap: 2%;
+}
+.noRecords{
+  font-size: 35px;
+  color: black;
 }
 
 
