@@ -1,5 +1,6 @@
 <?php
   include('dbconnect.php');
+  include('staffRecord.php');
   session_start();
   if (!isset($_SESSION['email'])) {
     header("Location: index.php");
@@ -177,36 +178,49 @@
       </header>
         <div id="customerList">
           <h2>Customer List</h2>
+          <span id="closeAddCustomerModal">&times;</span>
           <?php
-            if ($result1->num_rows > 0){
-               while ($row = $result1->fetch_assoc()){
-                echo '
-                <table>
-                  <thead>
-                      <tr>
-                        <th>Customer ID</th>
-                        <th>Full Name</th>
-                        <th>Address</th>
-                        <th>Detailed Address</th>
-                        <th>Phone Number</th>
-                      </tr>
-                  </thead>
-                  <tbody>
+           if ($result1->num_rows > 0) {
+            echo '
+              <table>
+                <thead>
                     <tr>
-                        <td>'.htmlspecialchars($row['customerID']).'</td>
-                        <td>'.htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ', ' . $row['MiddleName']).'</td>
-                        <td>'.htmlspecialchars($row['province'] . ', ' . $row['city'] . ' ' . $row['barangay']).'</td>
-                        <td>'.htmlspecialchars($row['detailedAddress']).'</td>
-                        <td>'.htmlspecialchars($row['contact']).'</td>
+                      <th>Customer ID</th>
+                      <th>Full Name</th>
+                      <th>Address</th>
+                      <th>Detailed Address</th>
+                      <th>Phone Number</th>
+                      <th>Added By</th>
+                      <th>Actions</th>
                     </tr>
-                  </tbody>
-                </table>';
-               }
-              
-            }
-           else {
+                </thead>
+                <tbody>
+              ';
+              while ($row = $result1->fetch_assoc()) {
+                  echo '
+                    <tr>
+                        <td>' . htmlspecialchars($row['customerID']) . '</td>
+                        <td>' . htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName']) . '</td>
+                        <td>' . htmlspecialchars($row['province'] . ', ' . $row['city'] . ', ' . $row['barangay']) . '</td>
+                        <td>' . htmlspecialchars($row['detailedAddress']) . '</td>
+                        <td>' . htmlspecialchars($row['contact']) . '</td>
+                        <td>' . htmlspecialchars($row['addedBy']) . '</td>
+                        <td>
+                          <div class="actionsDiv">
+                            <div><img src="../assets/icons/edit.png" alt="edit"></div>
+                            <div><img src="../assets/icons/delete.png" alt="delete"></div>
+                          </div>
+                        </td>
+                    </tr>
+                  ';
+              }
+              echo '
+                </tbody>
+              </table>';
+            } else {
                 echo '<p class="noRecords">No records found.</p>';
             }
+
           ?>
           
         </div>
@@ -248,6 +262,7 @@
   <div class="section" id="salesSection">
     <h2>Daily Sales</h2>
     <form>
+      
       <label for="date">Date</label><br>
       <input type="text" id="date" name="date" value="Auto-generated" readonly><br>
 

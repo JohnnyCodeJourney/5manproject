@@ -333,4 +333,8 @@ form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup{
   color: black;
 }
 
-
+.actionsDiv{
+  display: flex;
+  flex-direction: row;
+  gap: 2%;
+}
