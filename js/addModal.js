@@ -23,6 +23,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const addRentalsModal = document.getElementById('addRentalsModal');
   const closeRentalModalBtn = document.getElementById('closeRentInformation');
   const cancelRentBtn = document.getElementById('cancelRent');
+  const searchInput1 = document.getElementById('searchCustomer1');
+  
+  
+  if (searchInput1) {
+    searchInput1.addEventListener('input', function () {
+      const filter1 = this.value.toLowerCase();
+      const rows1 = document.querySelectorAll('#customerTableBody1 tr');
+      rows1.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(filter1) ? '' : 'none';
+      });
+    });
+  }
 
   if (openRentalModal) {
     openRentalModal.onclick = () => addRentalsModal.style.display = 'flex';

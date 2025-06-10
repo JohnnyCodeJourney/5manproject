@@ -129,7 +129,8 @@
         <div class="add-customer" id="openAddCustomerModal">
             <span>Add Customer</span>
             <img src="../assets/icons/plus-solid.svg" alt="add icon" class="add-icon">
-        </div>        
+        </div>
+                
 
         <!-- Add Customer Modal -->
         <div id="addCustomerModal" class="modal">
@@ -195,59 +196,63 @@
       </header>
         <div id="customerList">
           <h2>Customer List</h2>
+          <input type="text" id="searchCustomer1" placeholder="Search by name or contact...">
           <?php
            if ($result1->num_rows > 0) {
             echo '
-              <table>
-                <thead>
-                    <tr>
-                      <th>Customer ID</th>
-                      <th>Full Name</th>
-                      <th>Address</th>
-                      <th>Detailed Address</th>
-                      <th>Phone Number</th>
-                      <th>Added By</th>
-                      <th class="actionsTD" >Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-              ';
-              while ($row = $result1->fetch_assoc()) {
-                  echo '
-                    <tr>
-                        <td>' . htmlspecialchars($row['customerID']) . '</td>
-                        <td>' . htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName']) . '</td>
-                        <td>' . htmlspecialchars($row['province'] . ', ' . $row['city'] . ', ' . $row['barangay']) . '</td>
-                        <td>' . htmlspecialchars($row['detailedAddress']) . '</td>
-                        <td>' . htmlspecialchars($row['contact']) . '</td>
-                        <td>' . htmlspecialchars($row['addedBy']) . '</td>
-                        <td class="actionsTD">
-                          <div class="actionsDiv">
+              <div class="tableDiv">
+                <table>
+                  <thead>
+                      <tr>
+                        <th>Customer ID</th>
+                        <th>Full Name</th>
+                        <th>Address</th>
+                        <th>Detailed Address</th>
+                        <th>Phone Number</th>
+                        <th>Added By</th>
+                        <th class="actionsTD" >Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody id="customerTableBody1">
+                ';
+                while ($row = $result1->fetch_assoc()) {
+                    echo '
+                      <tr>
+                          <td>' . htmlspecialchars($row['customerID']) . '</td>
+                          <td>' . htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName']) . '</td>
+                          <td>' . htmlspecialchars($row['province'] . ', ' . $row['city'] . ', ' . $row['barangay']) . '</td>
+                          <td>' . htmlspecialchars($row['detailedAddress']) . '</td>
+                          <td>' . htmlspecialchars($row['contact']) . '</td>
+                          <td>' . htmlspecialchars($row['addedBy']) . '</td>
+                          <td class="actionsTD">
                             <div class="actionsDiv">
-                              <div>
-                                <img src="../assets/icons/edit.png" alt="edit" class="editBtn"
-                                    data-id="' . $row['customerID'] . '"
-                                    data-lname="' . htmlspecialchars($row['LastName']) . '"
-                                    data-fname="' . htmlspecialchars($row['FirstName']) . '"
-                                    data-mname="' . htmlspecialchars($row['MiddleName']) . '"
-                                    data-province="' . htmlspecialchars($row['province']) . '"
-                                    data-city="' . htmlspecialchars($row['city']) . '"
-                                    data-barangay="' . htmlspecialchars($row['barangay']) . '"
-                                    data-detailed="' . htmlspecialchars($row['detailedAddress']) . '"
-                                    data-contact="' . htmlspecialchars($row['contact']) . '">
-                              </div>
-                              <div>
-                                <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn"
-                                    data-id="' . $row['customerID'] . '">
-                              </div>
-                          </div>
-                        </td>
-                    </tr>
+                              <div class="actionsDiv">
+                                <div>
+                                  <img src="../assets/icons/edit.png" alt="edit" class="editBtn"
+                                      data-id="' . $row['customerID'] . '"
+                                      data-lname="' . htmlspecialchars($row['LastName']) . '"
+                                      data-fname="' . htmlspecialchars($row['FirstName']) . '"
+                                      data-mname="' . htmlspecialchars($row['MiddleName']) . '"
+                                      data-province="' . htmlspecialchars($row['province']) . '"
+                                      data-city="' . htmlspecialchars($row['city']) . '"
+                                      data-barangay="' . htmlspecialchars($row['barangay']) . '"
+                                      data-detailed="' . htmlspecialchars($row['detailedAddress']) . '"
+                                      data-contact="' . htmlspecialchars($row['contact']) . '">
+                                </div>
+                                <div>
+                                  <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn"
+                                      data-id="' . $row['customerID'] . '">
+                                </div>
+                            </div>
+                          </td>
+                      </tr>
                   ';
               }
               echo '
-                </tbody>
-              </table>';
+                    </tbody>
+                  </table>
+                  </div>
+                  ';
             } else {
                 echo '<p class="noRecords">No records found.</p>';
             }
@@ -400,37 +405,41 @@
             </form>
         </div>
         <!-- Select Customer -->
-        <div id="selectCustomerModal" class="modal">
+        <div id="selectCustomerModal" class="modal selectModal">
           <div class="modal-content">
-            <span class="close" id="closeCustomerModal">&times;</span>
-            <h2>Select Customer</h2>
-            <input type="text" id="searchCustomer" placeholder="Search by name or contact..." style="width: 100%; margin-bottom: 10px;">
-            <table>
-              <thead>
-                <tr>
-                  <th>Customer ID</th>
-                  <th>Full Name</th>
-                  <th>Contact</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody id="customerTableBody">
-                <?php
-                  $result = $con->query("SELECT customerID, FirstName, MiddleName, LastName, contact FROM customerinfo");
-                  while ($row = $result->fetch_assoc()) {
-                    $fullName = htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName']);
-                    echo '
-                      <tr>
-                        <td>' . htmlspecialchars($row['customerID']) . '</td>
-                        <td>' . $fullName . '</td>
-                        <td>' . htmlspecialchars($row['contact']) . '</td>
-                        <td><button type="button" onclick="selectCustomer(' . $row['customerID'] . ', \'' . $fullName . '\', \'' . $row['contact'] . '\')">Select</button></td>
-                      </tr>
-                    ';
-                  }
-                ?>
-              </tbody>
-            </table>
+            <div class="selectCustomerTop">
+              <h2>Select Customer</h2>
+              <span class="close" id="closeCustomerModal">&times;</span>
+            </div>
+            <input type="text" id="searchCustomer" placeholder="Search by name or contact...">
+            <div class="selectTable">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Customer ID</th>
+                    <th>Full Name</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="customerTableBody">
+                  <?php
+                    $result = $con->query("SELECT customerID, FirstName, MiddleName, LastName, contact FROM customerinfo");
+                    while ($row = $result->fetch_assoc()) {
+                      $fullName = htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName']);
+                      echo '
+                        <tr>
+                          <td>' . htmlspecialchars($row['customerID']) . '</td>
+                          <td>' . $fullName . '</td>
+                          <td>' . htmlspecialchars($row['contact']) . '</td>
+                          <td><button type="button" onclick="selectCustomer(' . $row['customerID'] . ', \'' . $fullName . '\', \'' . $row['contact'] . '\')">Select</button></td>
+                        </tr>
+                      ';
+                    }
+                  ?>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <!-- TABLE -->
@@ -471,10 +480,19 @@
                           <div class="actionsDiv">
                             <div class="actionsDiv">
                               <div>
-                                <img src="../assets/icons/edit.png" alt="edit" class="editBtn"
+                                <form>
+                                  <button class="actionBtn">
+                                    <img src="../assets/icons/edit.png" alt="edit" class="editBtn">
+                                  </button>
+                                </form>
                               </div>
                               <div>
-                                <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn"
+                                <form action="deleteRental.php" method="POST">
+                                  <input type="hidden" name="id" value="' . htmlspecialchars($row3['rentalID']) . '">
+                                  <button type="submit" class="actionBtn">
+                                    <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn">
+                                  </button>
+                                </form>
                               </div>
                           </div>
                         </td>
@@ -489,24 +507,24 @@
             }
 
           ?>
-          <div id="editModal" class="modal" style="display:none;">
+          <div id="rentEditModal" class="modal" style="display:none;">
             <div class="modal-content">
                <div class="upperPosition">
                 <div><h2 style="margin-top:0;">Edit Customer</h><br></div>
                 <div><span class="closeModal">&times;</span></div>
             </div>
-              <form id="editForm" method="POST" action="editCustomer.php">
-                <input type="hidden" name="customerID" id="editID">
+              <form id="rentEditForm" method="POST" action="editCustomer.php">
+                <input type="hidden" name="customerID" id="rentEditID">
                 <div class="name">
                 <div class="nameGroup">
                   <label>Last Name</label>
-                  <input type="text" name="lastName" id="editLastName">
+                  <input type="text" name="lastName" id="rentEditLastName">
                 </div>
                 <div class="nameGroup">
-                  <label>First Name: <input type="text" name="firstName" id="editFirstName"></label>
+                  <label>First Name: <input type="text" name="firstName" id="rentEditFirstName"></label>
                 </div>
                 <div class="nameGroup middleName">
-                  <label>Middle Name: <input type="text" name="middleName" id="editMiddleName"></label>
+                  <label>Middle Name: <input type="text" name="middleName" id="rentEditMiddleName"></label>
                 </div>
               </div>
 
@@ -516,21 +534,21 @@
 
               <div class="addressDiv">
                 <div class="addressgroup">
-                  <label>Province: <input type="text" name="province" id="editProvince"></label>
+                  <label>Province: <input type="text" name="province" id="rentEditProvince"></label>
                 </div>
                 <div class="addressgroup">
-                  <label>City: <input type="text" name="city" id="editCity"></label>
+                  <label>City: <input type="text" name="city" id="rentEditCity"></label>
                 </div>
                 <div class="addressgroup">
-                  <label>Barangay: <input type="text" name="barangay" id="editBarangay"></label>
+                  <label>Barangay: <input type="text" name="barangay" id="rentEditBarangay"></label>
                 </div>
               </div>
               <div class="detailedAdd">
                   <div>
-                    <label>Detailed Address: <input type="text" name="detailedAdd" id="editDetailed"></label>
+                    <label>Detailed Address: <input type="text" name="detailedAdd" id="rentEditDetailed"></label>
                   </div>
                   <div>
-                    <label>Contact: <input type="text" name="contact" id="editContact"></label>
+                    <label>Contact: <input type="text" name="contact" id="rentEditContact"></label>
                   </div>
  
               </div>
