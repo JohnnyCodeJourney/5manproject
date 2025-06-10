@@ -236,6 +236,8 @@ table {
   border-collapse: collapse;
   border: 1px solid rgba(0, 0, 0, 0.13);
   margin-top: 20px;
+  max-height: 70vh;
+  overflow-y: scroll;
 }
 
 th,
@@ -243,6 +245,7 @@ td {
   border-top: 1px solid #ddd;
   padding: 10px;
   text-align: center;
+  max-height: 30px;
 }
 
 th {
@@ -267,8 +270,7 @@ tr:hover {
   margin-top: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-height: 70vh;
-  
+  max-height: 70vh;
 }
 .modal{
   display: none;
