@@ -50,6 +50,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  const searchInput2 = document.getElementById('searchCustomer2');
+  
+  
+  if (searchInput2) {
+    searchInput2.addEventListener('input', function () {
+      const filter2 = this.value.toLowerCase();
+      const rows2 = document.querySelectorAll('#customerTableBody2 tr');
+      rows2.forEach(row => {
+        const text = rows.innerText.toLowerCase();
+        row.style.display = text.includes(filter2) ? '' : 'none';
+      });
+    });
+  }
+
   // ---------- SELECT CUSTOMER MODAL ----------
   const modalSelect = document.getElementById("selectCustomerModal");
   const openSelectCustomerBtn = document.getElementById("openCustomerModal");
@@ -95,10 +109,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- EDIT CUSTOMER ----------
   document.querySelectorAll('.editBtn').forEach(btn => {
     btn.addEventListener('click', () => {
+      document.getElementById('editID').value = btn.dataset.id;
+      document.getElementById('editLastName').value = btn.dataset.lname;
+      document.getElementById('editFirstName').value = btn.dataset.fname;
+      document.getElementById('editMiddleName').value = btn.dataset.mname;
+      document.getElementById('editProvince').value = btn.dataset.province;
+      document.getElementById('editCity').value = btn.dataset.city;
+      document.getElementById('editBarangay').value = btn.dataset.barangay;
+      document.getElementById('editDetailed').value = btn.dataset.detailed;
+      document.getElementById('editContact').value = btn.dataset.contact;
+
       document.getElementById('editModal').style.display = 'flex';
     });
   });
-
   const closeEditModal = document.querySelector('.closeModal');
   if (closeEditModal) {
     closeEditModal.addEventListener('click', () => {

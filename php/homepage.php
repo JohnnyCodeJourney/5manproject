@@ -227,9 +227,18 @@
                           <td class="actionsTD">
                             <div class="actionsDiv">
                               <div>
-                                  <button type="button" class="actionBtn">
-                                    <img src="../assets/icons/edit.png" alt="edit" class="editBtn">
-                                  </button>
+                                  <button type="button" class="actionBtn editBtn"
+                                    data-id="' . htmlspecialchars($row['customerID']) . '"
+                                    data-lname="' . htmlspecialchars($row['LastName']) . '"
+                                    data-fname="' . htmlspecialchars($row['FirstName']) . '"
+                                    data-mname="' . htmlspecialchars($row['MiddleName']) . '"
+                                    data-province="' . htmlspecialchars($row['province']) . '"
+                                    data-city="' . htmlspecialchars($row['city']) . '"
+                                    data-barangay="' . htmlspecialchars($row['barangay']) . '"
+                                    data-detailed="' . htmlspecialchars($row['detailedAddress']) . '"
+                                    data-contact="' . htmlspecialchars($row['contact']) . '">
+                                    <img src="../assets/icons/edit.png" alt="edit">
+                                </button>
                               </div>
                               <div>
                                 <form action="deleteCustomer.php" method="POST" onsubmit="return confirm(\'Are you sure you want to remove this record?\');">
@@ -261,17 +270,17 @@
                 <div><span class="closeModal">&times;</span></div>
             </div>
               <form id="editForm" method="POST" action="editCustomer.php">
-                <input type="hidden" name="customerID" id="editID" value="<?php echo htmlspecialchars($row['customerID']); ?>">
+                <input type="hidden" name="customerID" id="editID">
                 <div class="name">
                 <div class="nameGroup">
                   <label>Last Name</label>
-                  <input type="text" name="lastName" id="editLastName" value="<?php echo htmlspecialchars($row['LastName']); ?>">
+                  <input type="text" name="lastName" id="editLastName">
                 </div>
                 <div class="nameGroup">
-                  <label>First Name: <input type="text" name="firstName" id="editFirstName" value="<?php echo htmlspecialchars($row['FirstName']); ?>"></label>
+                  <label>First Name: <input type="text" name="firstName" id="editFirstName"></label>
                 </div>
                 <div class="nameGroup middleName">
-                  <label>Middle Name: <input type="text" name="middleName" id="editMiddleName" value="<?php echo htmlspecialchars($row['MiddleName']); ?>"></label>
+                  <label>Middle Name: <input type="text" name="middleName" id="editMiddleName"></label>
                 </div>
               </div>
 
@@ -281,21 +290,21 @@
 
               <div class="addressDiv">
                 <div class="addressgroup">
-                  <label>Province: <input type="text" name="province" id="editProvince" value="<?php echo htmlspecialchars($row['province']); ?>"></label>
+                  <label>Province: <input type="text" name="province" id="editProvince"></label>
                 </div>
                 <div class="addressgroup">
-                  <label>City: <input type="text" name="city" id="editCity" value="<?php echo htmlspecialchars($row['city']); ?>"></label>
+                  <label>City: <input type="text" name="city" id="editCity"></label>
                 </div>
                 <div class="addressgroup">
-                  <label>Barangay: <input type="text" name="barangay" id="editBarangay" value="<?php echo htmlspecialchars($row['barangay']); ?>"></label>
+                  <label>Barangay: <input type="text" name="barangay" id="editBarangay"></label>
                 </div>
               </div>
               <div class="detailedAdd">
                   <div>
-                    <label>Detailed Address: <input type="text" name="detailedAdd" id="editDetailed" value="<?php echo htmlspecialchars($row['detailedAddress']); ?>"></label>
+                    <label>Detailed Address: <input type="text" name="detailedAdd" id="editDetailed"></label>
                   </div>
                   <div>
-                    <label>Contact: <input type="text" name="contact" id="editContact" value="<?php echo htmlspecialchars($row['contact']); ?>"></label>
+                    <label>Contact: <input type="text" name="contact" id="editContact"></label>
                   </div>
  
               </div>
@@ -440,64 +449,69 @@
         </div>
         <!-- TABLE -->
       </header>
-        <div id="customerList">
+        <div id="rentalList">
           <h2>Rental List</h2>
+          <input type="text" id="searchCustomer2" placeholder="Search by name or contact...">
           <?php
            if ($result3->num_rows > 0) {
             echo '
-              <table>
-                <thead>
-                    <tr>
-                      <th>Rental ID</th>
-                      <th>Full Name</th>
-                      <th>Car Type</th>
-                      <th>Rate Per Day</th>
-                      <th>Number of Days</th>
-                      <th>Total</th>
-                      <th>Date Duration</th>
-                      <th>Added by</th>
-                      <th class="actionsTD" >Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-              ';
-              while ($row3 = $result3->fetch_assoc()) {
-                  echo '
-                    <tr>
-                        <td>' . htmlspecialchars($row3['rentalID']) . '</td>
-                        <td>' . htmlspecialchars($row3['fullName']) . '</td>
-                        <td>' . htmlspecialchars($row3['carType']) . '</td>
-                        <td>' . htmlspecialchars($row3['ratePerDay']) . '</td>
-                        <td>' . htmlspecialchars($row3['numberOfDays']) . '</td>
-                        <td>' . htmlspecialchars($row3['total']) . '</td>
-                        <td>' . htmlspecialchars($row3['dateDuration']) . '</td>
-                        <td>' . htmlspecialchars($row3['addedBy']) . '</td>
-                        <td class="actionsTD">
-                          <div class="actionsDiv">
+              <div class="tableDiv">
+                <table>
+                  <thead>
+                      <tr>
+                        <th>Rental ID</th>
+                        <th>Full Name</th>
+                        <th>Car Type</th>
+                        <th>Rate Per Day</th>
+                        <th>Number of Days</th>
+                        <th>Total</th>
+                        <th>Date Duration</th>
+                        <th>Added by</th>
+                        <th class="actionsTD" >Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody id="customerTableBody2">
+                ';
+                while ($row3 = $result3->fetch_assoc()) {
+                    echo '
+                      <tr>
+                          <td>' . htmlspecialchars($row3['rentalID']) . '</td>
+                          <td>' . htmlspecialchars($row3['fullName']) . '</td>
+                          <td>' . htmlspecialchars($row3['carType']) . '</td>
+                          <td>' . htmlspecialchars($row3['ratePerDay']) . '</td>
+                          <td>' . htmlspecialchars($row3['numberOfDays']) . '</td>
+                          <td>' . htmlspecialchars($row3['total']) . '</td>
+                          <td>' . htmlspecialchars($row3['dateDuration']) . '</td>
+                          <td>' . htmlspecialchars($row3['addedBy']) . '</td>
+                          <td class="actionsTD">
                             <div class="actionsDiv">
-                              <div>
-                                <form>
-                                  <button class="actionBtn">
-                                    <img src="../assets/icons/edit.png" alt="edit" class="editBtn">
-                                  </button>
-                                </form>
-                              </div>
-                              <div>
-                                <form action="deleteRental.php" method="POST" onsubmit="return confirm(\'Are you sure you want to remove this record?\');">
-                                  <input type="hidden" name="id" value="' . htmlspecialchars($row3['rentalID']) . '">
-                                  <button type="submit" class="actionBtn">
-                                    <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn">
-                                  </button>
-                                </form>
-                              </div>
-                          </div>
-                        </td>
-                    </tr>
-                  ';
-              }
-              echo '
-                </tbody>
-              </table>';
+                              <div class="actionsDiv">
+                                <div>
+                                  <form>
+                                    <button class="actionBtn">
+                                      <img src="../assets/icons/edit.png" alt="edit" class="editBtn">
+                                    </button>
+                                  </form>
+                                </div>
+                                <div>
+                                  <form action="deleteRental.php" method="POST" onsubmit="return confirm(\'Are you sure you want to remove this record?\');">
+                                    <input type="hidden" name="id" value="' . htmlspecialchars($row3['rentalID']) . '">
+                                    <button type="submit" class="actionBtn">
+                                      <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn">
+                                    </button>
+                                  </form>
+                                </div>
+                            </div>
+                          </td>
+                      </tr>
+                    ';
+                }
+                echo '
+                  </tbody>
+                </table>
+              </div>
+                ';
+                
             } else {
                 echo '<p class="noRecords">No records found.</p>';
             }
