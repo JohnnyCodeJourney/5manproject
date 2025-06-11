@@ -226,23 +226,19 @@
                           <td>' . htmlspecialchars($row['addedBy']) . '</td>
                           <td class="actionsTD">
                             <div class="actionsDiv">
-                              <div class="actionsDiv">
-                                <div>
-                                  <img src="../assets/icons/edit.png" alt="edit" class="editBtn"
-                                      data-id="' . $row['customerID'] . '"
-                                      data-lname="' . htmlspecialchars($row['LastName']) . '"
-                                      data-fname="' . htmlspecialchars($row['FirstName']) . '"
-                                      data-mname="' . htmlspecialchars($row['MiddleName']) . '"
-                                      data-province="' . htmlspecialchars($row['province']) . '"
-                                      data-city="' . htmlspecialchars($row['city']) . '"
-                                      data-barangay="' . htmlspecialchars($row['barangay']) . '"
-                                      data-detailed="' . htmlspecialchars($row['detailedAddress']) . '"
-                                      data-contact="' . htmlspecialchars($row['contact']) . '">
-                                </div>
-                                <div>
-                                  <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn"
-                                      data-id="' . $row['customerID'] . '">
-                                </div>
+                              <div>
+                                  <button type="button" class="actionBtn">
+                                    <img src="../assets/icons/edit.png" alt="edit" class="editBtn">
+                                  </button>
+                              </div>
+                              <div>
+                                <form action="deleteCustomer.php" method="POST" onsubmit="return confirm(\'Are you sure you want to remove this record?\');">
+                                  <input type="hidden" name="DelID" value="' . htmlspecialchars($row['customerID']) . '">
+                                  <button type="submit" class="actionBtn">
+                                    <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn">
+                                  </button>
+                                </form>
+                              </div>
                             </div>
                           </td>
                       </tr>
@@ -265,17 +261,17 @@
                 <div><span class="closeModal">&times;</span></div>
             </div>
               <form id="editForm" method="POST" action="editCustomer.php">
-                <input type="hidden" name="customerID" id="editID">
+                <input type="hidden" name="customerID" id="editID" value="<?php echo htmlspecialchars($row['customerID']); ?>">
                 <div class="name">
                 <div class="nameGroup">
                   <label>Last Name</label>
-                  <input type="text" name="lastName" id="editLastName">
+                  <input type="text" name="lastName" id="editLastName" value="<?php echo htmlspecialchars($row['LastName']); ?>">
                 </div>
                 <div class="nameGroup">
-                  <label>First Name: <input type="text" name="firstName" id="editFirstName"></label>
+                  <label>First Name: <input type="text" name="firstName" id="editFirstName" value="<?php echo htmlspecialchars($row['FirstName']); ?>"></label>
                 </div>
                 <div class="nameGroup middleName">
-                  <label>Middle Name: <input type="text" name="middleName" id="editMiddleName"></label>
+                  <label>Middle Name: <input type="text" name="middleName" id="editMiddleName" value="<?php echo htmlspecialchars($row['MiddleName']); ?>"></label>
                 </div>
               </div>
 
@@ -285,21 +281,21 @@
 
               <div class="addressDiv">
                 <div class="addressgroup">
-                  <label>Province: <input type="text" name="province" id="editProvince"></label>
+                  <label>Province: <input type="text" name="province" id="editProvince" value="<?php echo htmlspecialchars($row['province']); ?>"></label>
                 </div>
                 <div class="addressgroup">
-                  <label>City: <input type="text" name="city" id="editCity"></label>
+                  <label>City: <input type="text" name="city" id="editCity" value="<?php echo htmlspecialchars($row['city']); ?>"></label>
                 </div>
                 <div class="addressgroup">
-                  <label>Barangay: <input type="text" name="barangay" id="editBarangay"></label>
+                  <label>Barangay: <input type="text" name="barangay" id="editBarangay" value="<?php echo htmlspecialchars($row['barangay']); ?>"></label>
                 </div>
               </div>
               <div class="detailedAdd">
                   <div>
-                    <label>Detailed Address: <input type="text" name="detailedAdd" id="editDetailed"></label>
+                    <label>Detailed Address: <input type="text" name="detailedAdd" id="editDetailed" value="<?php echo htmlspecialchars($row['detailedAddress']); ?>"></label>
                   </div>
                   <div>
-                    <label>Contact: <input type="text" name="contact" id="editContact"></label>
+                    <label>Contact: <input type="text" name="contact" id="editContact" value="<?php echo htmlspecialchars($row['contact']); ?>"></label>
                   </div>
  
               </div>
@@ -487,7 +483,7 @@
                                 </form>
                               </div>
                               <div>
-                                <form action="deleteRental.php" method="POST">
+                                <form action="deleteRental.php" method="POST" onsubmit="return confirm(\'Are you sure you want to remove this record?\');">
                                   <input type="hidden" name="id" value="' . htmlspecialchars($row3['rentalID']) . '">
                                   <button type="submit" class="actionBtn">
                                     <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn">

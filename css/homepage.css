@@ -377,7 +377,7 @@ form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup,.c
   justify-content: space-between;
 }
 
-.actionsDiv div form .actionBtn{
+.actionsDiv div form .actionBtn, .actionsDiv div .actionBtn{
   background-color: rgba(255, 0, 0, 0);
   border: none;
 }
