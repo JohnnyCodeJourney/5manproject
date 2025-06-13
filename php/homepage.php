@@ -23,13 +23,13 @@
   else{
     $username = "Unknown User";
   }
-
+  // customer Info
   $sql1 = "SELECT * FROM customerinfo";
   $result1 = $con->query($sql1);
   if (!$result1) {
     die("Query failed: " . mysqli_error($con));
   }
-
+  // customer counts
   $sql2 = "SELECT COUNT(*) as totalCustomer FROM customerinfo";
   $result2 = $con->query($sql2);
   if (!$result2) {
@@ -38,12 +38,18 @@
   
   $row2 = $result2->fetch_assoc();
   $totalCustomer = $row2['totalCustomer'];
-
+  //rental info
   $sql3 = "SELECT r.rentalID, c.customerID, CONCAT(c.firstName, ' ', c.lastName) AS fullName, c.contact,
           r.carType, r.ratePerDay, r.numberOfDays, r.total, r.dateStart, CONCAT(DATE_FORMAT(r.dateStart, '%b %d, %Y'), ' - ', DATE_FORMAT(r.dateEnd, '%b %d, %Y')) AS dateDuration, r.addedBy
         FROM rental r JOIN customerinfo c ON r.customerID = c.customerID ORDER BY r.dateStart DESC";
   $result3 = $con->query($sql3);
   if (!$result3) {
+    die("Query failed: " . mysqli_error($con));
+  }
+
+  $sql4 = "SELECT * FROM staffrecords";
+  $staffResult = $con->query($sql4);
+  if (!$staffResult) {
     die("Query failed: " . mysqli_error($con));
   }
 ?>
