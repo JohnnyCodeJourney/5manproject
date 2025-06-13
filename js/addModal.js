@@ -64,6 +64,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+   // ---------- ADD Staff MODAL ----------
+  const openStaffModalBtn = document.getElementById('openAddStaffModal');
+  const StaffModal = document.getElementById('addStaffModal');
+  const closeStaffModalBtn = document.getElementById('closeAddStaffModal');
+  const cancelStaffBtn = document.getElementById('cancelStaffBTN');
+
+  if (openStaffModalBtn) {
+    openStaffModalBtn.onclick = () => StaffModal.style.display = 'flex';
+  }
+  if (closeStaffModalBtn) {
+    closeStaffModalBtn.onclick = () => StaffModal.style.display = 'none';
+  }
+  if (cancelStaffBtn) {
+    cancelStaffBtn.onclick = (e) => {
+      e.preventDefault();
+      StaffModal.style.display = 'none';
+    };
+  }
+
   // ---------- SELECT CUSTOMER MODAL ----------
   const modalSelect = document.getElementById("selectCustomerModal");
   const openSelectCustomerBtn = document.getElementById("openCustomerModal");

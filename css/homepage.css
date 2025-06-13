@@ -354,7 +354,7 @@ form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup,.c
   justify-content: center;
   align-items: center;
 }
-.closeModal, #closeRentEditInformation{
+.closeModal, #closeRentEditInformation,#closeAddStaffModal{
   cursor: pointer;
   font-size: 30px;
 }

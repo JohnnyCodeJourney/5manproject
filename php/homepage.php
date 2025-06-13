@@ -648,32 +648,59 @@
 
   <!-- PARA SA STAFF RECORD -->
   <div class="section" id="recordStaff">
-    <h2>Staff Records</h2>
-    <form action="staffRecord.php" method="POST">
-      <label for="staff_id">Staff ID</label><br>
-      <input type="text" value="<?php echo $generatedId; ?>" disabled readonly><br>
-      <input type="hidden" name="staff_id" value="<?php echo $generatedId; ?>">
+    <main class="main-content" id="dashboardSection">
+      <header class="dashboard-header">
+        <div class="welcome-section">
+            <h1>Welcome, <?php echo htmlspecialchars($username) ?></h1>
+            <p>Here's what's happening today.</p>
+        </div>
 
-      <label for="last_name">Last Name</label><br>
-      <input type="text" id="last_name" name="last_name" required><br>
+        <div class="add-customer addStaff" id="openAddStaffModal">
+            <span>Add Staff</span>
+            <img src="../assets/icons/plus-solid.svg" alt="add icon" class="add-icon">
+        </div>
 
-      <label for="first_name">First Name</label><br>
-      <input type="text" id="first_name" name="first_name" required><br>
+        <!-- add staff modal -->
+        <div class="modal" id="addStaffModal">
+          <div class="modal-content">
+           <div class="upperPosition">
+              <div><h2 style="margin-top:0;">Add Staff</h><br></div>
+              <div><span id="closeAddStaffModal">&times;</span></div>
+            </div>
+            <form action="staffRecord.php" method="POST">
+              <label for="staff_id">Staff ID</label><br>
+              <input type="text" value="<?php echo $generatedId; ?>" disabled readonly><br>
+              <input type="hidden" name="staff_id" value="<?php echo $generatedId; ?>">
 
-      <label for="middle_initial">Middle Initial</label><br>
-      <input type="text" id="middle_initial" name="middle_initial"><br>
+              <label for="last_name">Last Name</label><br>
+              <input type="text" id="last_name" name="last_name" required><br>
 
-      <label for="address">Address</label><br>
-      <input type="text" id="address" name="address" required><br>
+              <label for="first_name">First Name</label><br>
+              <input type="text" id="first_name" name="first_name" required><br>
 
-      <label for="contact_number">Contact Number</label><br>
-      <input type="text" id="contact_number" name="contact_number" required><br>
+              <label for="middle_initial">Middle Initial</label><br>
+              <input type="text" id="middle_initial" name="middle_initial"><br>
 
-      <label for="monthly_salary">Monthly Salary</label><br>
-      <input type="number" id="monthly_salary" name="monthly_salary" required><br>
+              <label for="address">Address</label><br>
+              <input type="text" id="address" name="address" required><br>
 
-      <button type="submit">Add Staff</button>
-    </form>
+              <label for="contact_number">Contact Number</label><br>
+              <input type="text" id="contact_number" name="contact_number" required><br>
+
+              <label for="monthly_salary">Monthly Salary</label><br>
+              <input type="number" id="monthly_salary" name="monthly_salary" required><br>
+
+              <div class="modalButtons">
+                <button type="submit" class="add-btn">Add</button>
+                <button id="cancelStaffBTN" type="button">Cancel</button>
+              </div>
+            </form>         
+          </div>          
+        </div>
+
+
+      </header>
+    </main>
   </div>
 
 
