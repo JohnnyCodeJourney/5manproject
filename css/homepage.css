@@ -354,10 +354,11 @@ form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup,.c
   justify-content: center;
   align-items: center;
 }
-.closeModal{
+.closeModal, #closeRentEditInformation{
   cursor: pointer;
   font-size: 30px;
 }
+
 #openCustomerModal{
   width: 100%;
 }

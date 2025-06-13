@@ -39,8 +39,8 @@
   $row2 = $result2->fetch_assoc();
   $totalCustomer = $row2['totalCustomer'];
 
-  $sql3 = "SELECT r.rentalID, c.customerID, CONCAT(c.firstName, ' ', c.lastName) AS fullName,
-          r.carType, r.ratePerDay, r.numberOfDays, r.total, CONCAT(DATE_FORMAT(r.dateStart, '%b %d, %Y'), ' - ', DATE_FORMAT(r.dateEnd, '%b %d, %Y')) AS dateDuration, r.addedBy
+  $sql3 = "SELECT r.rentalID, c.customerID, CONCAT(c.firstName, ' ', c.lastName) AS fullName, c.contact,
+          r.carType, r.ratePerDay, r.numberOfDays, r.total, r.dateStart, CONCAT(DATE_FORMAT(r.dateStart, '%b %d, %Y'), ' - ', DATE_FORMAT(r.dateEnd, '%b %d, %Y')) AS dateDuration, r.addedBy
         FROM rental r JOIN customerinfo c ON r.customerID = c.customerID ORDER BY r.dateStart DESC";
   $result3 = $con->query($sql3);
   if (!$result3) {
@@ -487,11 +487,17 @@
                             <div class="actionsDiv">
                               <div class="actionsDiv">
                                 <div>
-                                  <form>
-                                    <button class="actionBtn">
-                                      <img src="../assets/icons/edit.png" alt="edit" class="editBtn">
-                                    </button>
-                                  </form>
+                                  <button type="button" class="actionBtn editRentalBtn"
+                                  data-id="' . htmlspecialchars($row3["rentalID"]) . '"
+                                      data-customerid="' . $row3['customerID'] . '"
+                                      data-name="' . htmlspecialchars($fullName) . '"
+                                      data-contact="' . $row3['contact'] . '"
+                                      data-cartype="' . $row3['carType'] . '"
+                                      data-rate="' . $row3['ratePerDay'] . '"
+                                      data-days="' . $row3['numberOfDays'] . '"
+                                      data-datestart="' . $row3['dateStart'] . '">
+                                    <img src="../assets/icons/edit.png" alt="edit">
+                                  </button>
                                 </div>
                                 <div>
                                   <form action="deleteRental.php" method="POST" onsubmit="return confirm(\'Are you sure you want to remove this record?\');">
@@ -517,57 +523,119 @@
             }
 
           ?>
-          <div id="rentEditModal" class="modal" style="display:none;">
-            <div class="modal-content">
-               <div class="upperPosition">
-                <div><h2 style="margin-top:0;">Edit Customer</h><br></div>
-                <div><span class="closeModal">&times;</span></div>
+
+          <!-- edit Rental Modal -->
+        <div id="EditRentalsModal" class="modal" style="display:none;">
+          <div class="modal-content">
+            <div class="upperPosition">
+              <div><h2 style="margin-top:0;">Edit Rent Information</h><br></div>
+              <div><span id="closeRentEditInformation">&times;</span></div>
             </div>
-              <form id="rentEditForm" method="POST" action="editCustomer.php">
-                <input type="hidden" name="customerID" id="rentEditID">
-                <div class="name">
-                <div class="nameGroup">
-                  <label>Last Name</label>
-                  <input type="text" name="lastName" id="rentEditLastName">
+            <form action="updateRental.php" method="POST" id="EditRentalFormId">
+              <input type="hidden" name="rentalID" id="editRentalID">
+              <div class="customerSelection">
+                <div class="labelDiv">
+                  <label>Customer ID</label>
+                  <input type="text" id="EditselectedCustomerID" name="customerID" readonly required>
                 </div>
-                <div class="nameGroup">
-                  <label>First Name: <input type="text" name="firstName" id="rentEditFirstName"></label>
+                <div class="labelDiv">
+                  <label>Full Name</label>
+                  <input type="text" id="EditselectedCustomerName" readonly required>
                 </div>
-                <div class="nameGroup middleName">
-                  <label>Middle Name: <input type="text" name="middleName" id="rentEditMiddleName"></label>
+                <div class="labelDiv">
+                  <label>Contact</label>
+                <input type="text" id="EditselectedCustomerContact" readonly required>
                 </div>
+                
               </div>
-
+              <div class="customerSelection">
+                  <button type="button" id="EditopenCustomerModal">Choose Customer</button>
+                </div>
               <div>
-                <h2 style="margin-top:0;">Address</h2><br>
+                <h2 style="margin-top:0;">Select Car & Dates</h2><br>
               </div>
-
-              <div class="addressDiv">
-                <div class="addressgroup">
-                  <label>Province: <input type="text" name="province" id="rentEditProvince"></label>
+              <div class="cargroup">
+                <div>
+                  <label for="carType">Car Type</label><br>
+                  <select id="EditcarType" name="carType" class="form-input">
+                    <option value="" disabled selected>Select car type</option>
+                    <option value="SUV">SUV</option>
+                    <option value="SEDAN">Sedan</option>
+                    <option value="VAN">Van</option>
+                  </select>
                 </div>
-                <div class="addressgroup">
-                  <label>City: <input type="text" name="city" id="rentEditCity"></label>
-                </div>
-                <div class="addressgroup">
-                  <label>Barangay: <input type="text" name="barangay" id="rentEditBarangay"></label>
+                <div>
+                  <label for="rate">Rate per day</label><br>
+                  <input type="number" step="0.01" id="Editrate" name="rate" required>
                 </div>
               </div>
-              <div class="detailedAdd">
-                  <div>
-                    <label>Detailed Address: <input type="text" name="detailedAdd" id="rentEditDetailed"></label>
-                  </div>
-                  <div>
-                    <label>Contact: <input type="text" name="contact" id="rentEditContact"></label>
-                  </div>
- 
+              
+              <div class="totalgroup">
+                <div>
+                  <label for="Number of Days">Number of Days</label><br>
+                  <input type="number" step="1" id="EditnumberOfDays" name="numberOfDays" required>
+                </div>
+                <div>
+                  <label for="total">Total</label><br>
+                  <input type="text" id="EditTotalDisplay" disabled readonly>
+                  <input type="hidden" name="total" id="EditTotal">
+                </div>
+              </div>
+              <div class="dates">
+                <div class="dategroup">
+                  <label for="dateStart">Date Start</label><br>
+                  <input type="date" id="EditdateStart" name="dateStart">
+                </div>
+                <div class="dategroup">
+                  <label for="dateEnd">Date End</label><br>
+                  <input type="date" id="EditdateEnd" name="dateEnd" disabled readonly>
+                  <input type="hidden" id="EditdateEnd1" name="dateEnd1">
+                </div>
               </div>
               <div class="modalButtons">
-                <button type="submit">Save Changes</button>
+                <button type="submit" class="add-btn">Update</button>
+                <button id="rentcancelRent" type="button">Cancel</button>
               </div>
-              </form>
+            </form>
+        </div>
+        <!-- Edit Select Customer -->
+        <div id="EditselectCustomerModal" class="modal selectModal">
+          <div class="modal-content">
+            <div class="selectCustomerTop">
+              <h2>Select Customer</h2>
+              <span class="close" id="EditcloseCustomerModal">&times;</span>
+            </div>
+            <input type="text" id="EditsearchCustomer" placeholder="Search by name or contact...">
+            <div class="selectTable">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Customer ID</th>
+                    <th>Full Name</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="EditcustomerTableBody3">
+                  <?php
+                    $result = $con->query("SELECT customerID, FirstName, MiddleName, LastName, contact FROM customerinfo");
+                    while ($row = $result->fetch_assoc()) {
+                        $fullName = htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleName']);
+                        echo '
+                          <tr>
+                              <td>' . htmlspecialchars($row['customerID']) . '</td>
+                              <td>' . $fullName . '</td>
+                              <td>' . htmlspecialchars($row['contact']) . '</td>
+                              <td><button type="button" onclick="selectEditCustomer(' . $row['customerID'] . ', \'' . $fullName . '\', \'' . $row['contact'] . '\')">Select</button></td>
+                          </tr>
+                      ';
+                    }
+                  ?>
+                </tbody>
+              </table>
             </div>
           </div>
+        </div>
         </div>
     </main>
   </div>

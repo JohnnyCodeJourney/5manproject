@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const filter2 = this.value.toLowerCase();
       const rows2 = document.querySelectorAll('#customerTableBody2 tr');
       rows2.forEach(row => {
-        const text = rows.innerText.toLowerCase();
+        const text = row.innerText.toLowerCase();
         row.style.display = text.includes(filter2) ? '' : 'none';
       });
     });
@@ -136,4 +136,134 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.target === modalSelect) modalSelect.style.display = 'none';
     if (event.target === document.getElementById('editModal')) document.getElementById('editModal').style.display = 'none';
   };
+
+
+
+  // rental edit
+ document.querySelectorAll('.editRentalBtn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.getElementById('editRentalID').value = this.dataset.id;
+        
+        const customerId = this.dataset.customerid;
+        if (!customerId) {
+            alert("Error: No customer ID found in this record");
+            return;
+        }
+        document.getElementById('EditselectedCustomerID').value = customerId;
+        document.getElementById('EditselectedCustomerName').value = this.dataset.name || '';
+        document.getElementById('EditselectedCustomerContact').value = this.dataset.contact || '';
+        
+        document.getElementById('EditcarType').value = this.dataset.cartype || '';
+        document.getElementById('Editrate').value = this.dataset.rate || '';
+        document.getElementById('EditnumberOfDays').value = this.dataset.days || '';
+        
+        const dateStart = this.dataset.datestart ? this.dataset.datestart.split(' ')[0] : '';
+        document.getElementById('EditdateStart').value = dateStart;
+        
+        updateEditCalculations();
+        
+        document.getElementById('EditRentalsModal').style.display = 'flex';
+    });
+  });
+  
+
+  window.selectEditCustomer = function(id, name, contact) {
+    document.getElementById('EditselectedCustomerID').value = id;
+    document.getElementById('EditselectedCustomerName').value = name;
+    document.getElementById('EditselectedCustomerContact').value = contact;
+    document.getElementById('EditselectCustomerModal').style.display = 'none';
+  };
+
+
+  const editCustomerModal = document.getElementById('EditselectCustomerModal');
+  const editCloseCustomerBtn = document.getElementById('EditcloseCustomerModal');
+
+  if (editCloseCustomerBtn) {
+    editCloseCustomerBtn.addEventListener('click', function() {
+        editCustomerModal.style.display = 'none';
+    });
+  }
+
+
+  const searchInput3 = document.getElementById('EditsearchCustomer');
+  if (searchInput3) {
+    searchInput3.addEventListener('input', function() {
+      const filter = this.value.toLowerCase();
+      const rows = document.querySelectorAll('#EditcustomerTableBody tr');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(filter) ? '' : 'none';
+      });
+    });
+  }
+
+  function updateEditCalculations() {
+    const rate = parseFloat(document.getElementById('Editrate').value) || 0;
+    const days = parseInt(document.getElementById('EditnumberOfDays').value) || 0;
+    const startDate = document.getElementById('EditdateStart').value;
+    
+    const total = rate * days;
+    document.getElementById('EditTotalDisplay').value = total.toFixed(2);
+    document.getElementById('EditTotal').value = total.toFixed(2);
+    
+    if (startDate) {
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + days);
+        document.getElementById('EditdateEnd').value = endDate.toISOString().split('T')[0];
+        document.getElementById('EditdateEnd1').value = endDate.toISOString().split('T')[0];
+    }
+  }
+
+
+  document.getElementById('EditRentalFormId').addEventListener('submit', function(e) {
+    const customerId = document.getElementById('EditselectedCustomerID').value;
+    if (!customerId) {
+        e.preventDefault();
+        alert("Please select a customer before updating");
+        return;
+    }
+
+    if (!document.getElementById('EditcarType').value || 
+        !document.getElementById('Editrate').value ||
+        !document.getElementById('EditnumberOfDays').value ||
+        !document.getElementById('EditdateStart').value) {
+        e.preventDefault();
+        alert("Please fill all required fields");
+        return;
+    }
+  });
+
+  document.getElementById('Editrate').addEventListener('input', updateEditCalculations);
+  document.getElementById('EditnumberOfDays').addEventListener('input', updateEditCalculations);
+  document.getElementById('EditdateStart').addEventListener('change', updateEditCalculations);
+
+  document.getElementById('EditopenCustomerModal').addEventListener('click', function() {
+    document.getElementById('EditselectCustomerModal').style.display = 'flex';
+  });
+
+  document.getElementById('closeRentEditInformation').addEventListener('click', function() {
+    document.getElementById('EditRentalsModal').style.display = 'none';
+  });
+  
+  document.getElementById('rentcancelRent').addEventListener('click', function() {
+    document.getElementById('EditRentalsModal').style.display = 'none';
+  });
+
+
+  const originalWindowClick = window.onclick;
+  window.onclick = function(event) {
+    if (originalWindowClick) originalWindowClick(event);
+    if (event.target === editCustomerModal) editCustomerModal.style.display = 'none';
+    if (event.target === document.getElementById('EditRentalsModal')) {
+      document.getElementById('EditRentalsModal').style.display = 'none';
+    }
+  };
+
+
+
+
+
+
+
+
 });
