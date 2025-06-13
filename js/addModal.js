@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (searchInput3) {
     searchInput3.addEventListener('input', function() {
       const filter = this.value.toLowerCase();
-      const rows = document.querySelectorAll('#EditcustomerTableBody tr');
+      const rows = document.querySelectorAll('#EditcustomerTableBody3 tr');
       rows.forEach(row => {
         const text = row.innerText.toLowerCase();
         row.style.display = text.includes(filter) ? '' : 'none';
