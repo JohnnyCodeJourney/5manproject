@@ -35,9 +35,20 @@
   if (!$result2) {
     die("Query failed: " . mysqli_error($con));
   }
-  
+
   $row2 = $result2->fetch_assoc();
   $totalCustomer = $row2['totalCustomer'];
+
+  // total rentals today
+  $rentalCountSql = "SELECT COUNT(*) as totalRentals FROM rental where DATE(addedDate) = CURDATE()";
+  $rentalCountResult = $con->query($rentalCountSql);
+  if (!$rentalCountResult) {
+    die("Query failed: " . mysqli_error($con));
+  }
+  $rentalRow = $rentalCountResult->fetch_assoc();
+  $totalRentals = $rentalRow['totalRentals'];
+
+
   //rental info
   $sql3 = "SELECT r.rentalID, c.customerID, CONCAT(c.firstName, ' ', c.lastName) AS fullName, c.contact,
           r.carType, r.ratePerDay, r.numberOfDays, r.total, r.dateStart, CONCAT(DATE_FORMAT(r.dateStart, '%b %d, %Y'), ' - ', DATE_FORMAT(r.dateEnd, '%b %d, %Y')) AS dateDuration, r.addedBy
@@ -83,7 +94,7 @@
           <li id="customers_button" class="navItem">Add Customers</li>
           <li id="rentals_button" class="navItem">Add Rentals</li>
           <li id="staff_button" class="navItem">Staff</li>
-          <li id="reports_button" class="navItem">Reports</li>
+          <li id="reports_button" class="navItem">Daily Sales</li>
           <li id="users_button" class="navItem">Add Users</li>
           <li id="users_button" class="navItem">Settings</li>
         </ul>
@@ -104,7 +115,7 @@
       </header>
 
       <section class="cards">
-        <div class="card">
+        <div class="card daily-sales">
           <h3>Total Customers</h3>
           <p><?php echo htmlspecialchars($totalCustomer) ?></p>
         </div>
@@ -114,7 +125,7 @@
         </div>
         <div class="card">
           <h3>Rentals Today</h3>
-          <p>9</p>
+          <p><?php echo htmlspecialchars($totalRentals) ?></p>
         </div>
         <div class="card">
           <h3>Sales Today</h3>
@@ -374,7 +385,7 @@
               <div class="cargroup">
                 <div>
                   <label for="carType">Car Type</label><br>
-                  <select id="carType" name="carType" class="form-input">
+                  <select id="carType" name="carType" class="form-input" required>
                     <option value="" disabled selected>Select car type</option>
                     <option value="SUV">SUV</option>
                     <option value="SEDAN">Sedan</option>
@@ -401,7 +412,7 @@
               <div class="dates">
                 <div class="dategroup">
                   <label for="dateStart">Date Start</label><br>
-                  <input type="date" id="dateStart" name="dateStart">
+                  <input type="date" id="dateStart" name="dateStart" required>
                 </div>
                 <div class="dategroup">
                   <label for="dateEnd">Date End</label><br>
@@ -453,8 +464,8 @@
             </div>
           </div>
         </div>
-        <!-- TABLE -->
       </header>
+      <!-- TABLE -->
         <div id="rentalList">
           <h2>Rental List</h2>
           <input type="text" id="searchCustomer2" placeholder="Search by name or contact...">
@@ -704,12 +715,39 @@
   </div>
 
 
-  <!-- PARA SA CUSTOMER RECORD -->
+  <!-- PARA SA DAILY SALES -->
   <div class="section" id="reportSection">
-    <h2>Sales Report</h2>
-    <div id="sales-summary"></div>
-    <h3>Last Customer Ordered</h3>
-    <div id="last-customer"></div>
+    <main class="main-content" id="dashboardSection">
+      <header class="dashboard-header">
+        <div class="welcome-section">
+            <h1>Welcome, <?php echo htmlspecialchars($username) ?></h1>
+            <p>Here's what's happening today.</p>
+        </div>
+      </header>
+      <div id="dailySales">
+        <h2>Daily Report</h2>
+        <div class="Sales">
+          <div class="card" id="daily-rentals">
+            <h3>Total Renters</h3>
+            <p id="rentals-count">0</p>
+          </div>
+
+          <div class="card" id="daily-sales">
+            <h3>Sales</h3>
+            <p id="sales-amount">₱0</p>
+          </div>
+
+          <div class="date-selection">
+            <form id="dateFilterForm">
+              <div class="SelectDate">
+                <input type="date" id="dateSelection" name="dateSelection" required>
+                <button type="submit">Select</button>
+              </div>
+            </form>
+          </div>
+        </div>             
+      </div>
+    </main>
   </div>
 
   <!-- PARA SA ADDING NG USER OR ADMIN -->

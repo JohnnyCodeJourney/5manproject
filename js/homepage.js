@@ -117,5 +117,45 @@ rateInput.addEventListener('input', updateTotalAndEndDate);
 daysInput.addEventListener('input', updateTotalAndEndDate);
 dateStartInput.addEventListener('input', updateTotalAndEndDate);
 
-
-
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('dateFilterForm');
+    const rentalsCount = document.getElementById('rentals-count');
+    const salesAmount = document.getElementById('sales-amount');
+    
+    // Function to load data
+    function loadData(date) {
+        rentalsCount.textContent = 'Loading...';
+        salesAmount.textContent = 'Loading...';
+        
+        fetch(`get_daily_data.php?dateSelection=${date}`)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    rentalsCount.textContent = data.rentals;
+                    salesAmount.textContent = `₱${data.sales.toLocaleString()}`;
+                } else {
+                    throw new Error(data.message || 'Unknown server error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                rentalsCount.textContent = 'Error';
+                salesAmount.textContent = 'Error';
+            });
+    }
+    
+    // Form submission handler
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const date = document.getElementById('dateSelection').value;
+        loadData(date);
+    });
+    
+    // Load today's data on page load
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('dateSelection').value = today;
+    loadData(today);
+});

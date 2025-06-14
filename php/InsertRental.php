@@ -1,6 +1,8 @@
 <?php
     include 'dbconnect.php';
     session_start();
+    date_default_timezone_set('Asia/Manila');
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $customerID = $_POST['customerID'];
         $carType = $_POST['carType'];
