@@ -406,7 +406,7 @@
                 <div class="dategroup">
                   <label for="dateEnd">Date End</label><br>
                   <input type="date" id="dateEnd" name="dateEnd" disabled readonly>
-                  <input type="hidden" id="dateEnd1" name="dateEnd1">
+                  <input type="hidden" id="dateEnd1" name="dateEnd1"> 
                 </div>
               </div>
               <div class="modalButtons">
