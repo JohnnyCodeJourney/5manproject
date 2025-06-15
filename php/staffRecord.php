@@ -1,4 +1,4 @@
-<?php
+ <?php
     include('dbconnect.php');
 
     $sql = "SELECT COUNT(*) AS count FROM staffrecords";
