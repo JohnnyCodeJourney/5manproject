@@ -4,6 +4,7 @@ const staff = document.getElementById('recordStaff');
 const rentals = document.getElementById('salesSection');
 const report = document.getElementById('reportSection');
 const user = document.getElementById('userSection');
+const settings = document.getElementById('settingsSection');
 const navItems = document.querySelectorAll('.navItem');
 const actionsTD = document.querySelectorAll('.actionsTD');
 
@@ -33,6 +34,7 @@ function hideAll() {
   rentals.style.display = 'none';
   report.style.display = 'none';
   user.style.display = 'none';
+  settings.style.display = 'none';
 }
 
 document.getElementById('dashboard_button').addEventListener('click', () => {
@@ -158,4 +160,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('dateSelection').value = today;
     loadData(today);
+});
+
+document.getElementById('settings_button').addEventListener('click', () => {
+  hideAll();
+  settings.style.display = 'block';
+});
+
+// for confirming password
+document.getElementById('changePasswordForm')?.addEventListener('submit', function(e) {
+  const newPassword = document.getElementById('newPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  if (newPassword !== confirmPassword) {
+    e.preventDefault();
+    document.getElementById('changePasswordMessage').textContent = "New passwords do not match.";
+    document.getElementById('changePasswordMessage').style.color = "red";
+  }
 });

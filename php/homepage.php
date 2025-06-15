@@ -96,7 +96,7 @@
           <li id="staff_button" class="navItem">Staff</li>
           <li id="reports_button" class="navItem">Daily Sales</li>
           <li id="users_button" class="navItem">Add Users</li>
-          <li id="users_button" class="navItem">Settings</li>
+          <li id="settings_button" class="navItem">Settings</li>
         </ul>
       </nav>
       <div class="Logout">
@@ -779,6 +779,25 @@
 </body>
 </html>
 
+<div class="section" id="settingsSection" style="display:none;">
+  <main class="main-content" id="dashboardSection">
+    <h2>Settings</h2><br><br>
+    <h2>Change Password</h2>
+    <form id="changePasswordForm" action="changePassword.php" method="POST">
+      <label for="oldPassword">Old Password</label>
+      <input type="password" id="oldPassword" name="oldPassword" required>
+
+      <label for="newPassword">New Password</label>
+      <input type="password" id="newPassword" name="newPassword" required>
+
+      <label for="confirmPassword">Confirm New Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+      <button type="submit">Change Password</button>
+    </form>
+    <div id="changePasswordMessage"></div>
+  </main>
+</div>
 <!-- KULANG PA PO NG MGA DESIGN KASI MAG LALABA PA PO AKO -->
 
 
