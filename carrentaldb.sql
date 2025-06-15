@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2025 at 09:10 PM
--- Server version: 11.6.2-MariaDB
+-- Generation Time: Jun 15, 2025 at 07:54 AM
+-- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -68,11 +68,11 @@ CREATE TABLE `customerinfo` (
 --
 
 INSERT INTO `customerinfo` (`customerID`, `LastName`, `FirstName`, `MiddleName`, `province`, `city`, `barangay`, `detailedAddress`, `contact`, `addedBy`) VALUES
-(6, 'Domasian', 'Cley', 'Villarba', 'CAVITE', 'GENERAL TRIAS', 'Buenavista I', 'IG', '0560844548', 'KUPALIN'),
-(7, 'Domasian', 'Dredd', 'Villarba', 'BATANGAS', 'NASUGBU', 'Latag', 'Damulag kay kakang reyne', '09272483891', 'YoungDon'),
-(9, 'magalulo', 'francis', 'middleMan', 'TARLAC', 'CITY OF TARLAC (Capital)', 'Batang-batang', 'ilaya', '065768752', 'Dredd'),
-(10, 'burak', 'rubert', 'pagsanghan', 'BATANGAS', 'MABINI', 'Poblacion', 'kapatagan', '08945654', 'Dredd'),
-(11, 'aywan sayo ya', 'jrizz', 'bengbeng', 'BENGUET', 'BAKUN', 'Ampusongan', 'vengvang', '089245', 'Dredd');
+(6, 'Domasian', 'Cley', 'Villarba', 'CAVITE', 'GENERAL TRIAS', 'Buenavista 2', 'IG', '0560844548', 'KUPALIN'),
+(9, 'Jerusalem', 'Francis', 'middleMan', 'TARLAC', 'CITY OF TARLAC (Capital)', 'Batang-batang', 'ilaya', '065768752', 'Dredd'),
+(10, 'Moleno', 'Rubert', 'Pagsanghan', 'BATANGAS', 'MABINI', 'Poblacion', 'kapatagan', '08945654', 'Dredd'),
+(11, 'Magwawate', 'Lorence', 'Diwata', 'BENGUET', 'BAKUN', 'Ampusongan', 'Ayasib', '089245', 'Dredd'),
+(12, 'Casimiro', 'Donato', 'Anlaa', 'CAGAYAN', 'LAL-LO', 'Dagupan', 'pang apat na kanto kaliwa', '05465687', 'YoungDon');
 
 -- --------------------------------------------------------
 
@@ -89,18 +89,20 @@ CREATE TABLE `rental` (
   `total` decimal(10,2) DEFAULT NULL,
   `dateStart` date DEFAULT NULL,
   `dateEnd` date DEFAULT NULL,
-  `addedBy` varchar(250) NOT NULL
+  `addedBy` varchar(250) NOT NULL,
+  `addedDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `rental`
 --
 
-INSERT INTO `rental` (`rentalID`, `customerID`, `carType`, `ratePerDay`, `numberOfDays`, `total`, `dateStart`, `dateEnd`, `addedBy`) VALUES
-(7, 7, 'SEDAN', 500.00, 5, 2500.00, '2025-06-10', '2025-06-15', 'Dredd'),
-(8, 7, 'VAN', 55.00, 3, 165.00, '2025-06-07', '2025-06-10', 'Dredd'),
-(9, 11, 'SEDAN', 55.00, 6, 330.00, '2025-06-12', '2025-06-18', 'Dredd'),
-(10, 11, 'SEDAN', 500.00, 9, 4500.00, '2025-06-13', '2025-06-22', 'KUPALIN');
+INSERT INTO `rental` (`rentalID`, `customerID`, `carType`, `ratePerDay`, `numberOfDays`, `total`, `dateStart`, `dateEnd`, `addedBy`, `addedDate`) VALUES
+(11, 6, 'SEDAN', 5000.00, 30, 150000.00, '2025-06-15', '2025-07-15', 'Dredd', '2025-06-14'),
+(12, 10, 'SEDAN', 1500.00, 3, 4500.00, '2025-06-14', '2025-06-17', 'Dredd', '2025-06-14'),
+(15, 6, 'SUV', 500.00, 3, 1500.00, '2025-06-16', '2025-06-19', 'Dredd', '2025-06-14'),
+(17, 10, 'SEDAN', 500.00, 4, 2000.00, '2025-06-17', '2025-06-21', 'Dredd', '2025-06-15'),
+(18, 12, 'SEDAN', 1400.00, 3, 4200.00, '2025-06-17', '2025-06-20', 'YoungDon', '2025-06-15');
 
 -- --------------------------------------------------------
 
@@ -169,13 +171,13 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `customerinfo`
 --
 ALTER TABLE `customerinfo`
-  MODIFY `customerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `customerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `rental`
 --
 ALTER TABLE `rental`
-  MODIFY `rentalID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `rentalID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
