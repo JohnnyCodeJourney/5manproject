@@ -742,7 +742,6 @@
         </div>          
       </div>
     </header>
-
     <!-- TABLE -->
     <div id="staffList">
       <h2>Staff List</h2>
@@ -778,8 +777,8 @@
                         <div>
                             <button type="button" class="actionBtn editStaffBtn"
                               data-id="' . htmlspecialchars($row['id']) . '"
-                              data-lname="' . htmlspecialchars($row['LastName']) . '"
-                              data-fname="' . htmlspecialchars($row['FirstName']) . '"
+                              data-lastname="' . htmlspecialchars($row['LastName']) . '"
+                              data-firstname="' . htmlspecialchars($row['FirstName']) . '"
                               data-minit="' . htmlspecialchars($row['MiddleInitial']) . '"
                               data-address="' . htmlspecialchars($row['Address']) . '"
                               data-contact="' . htmlspecialchars($row['ContactNumber']) . '"
@@ -815,15 +814,15 @@
         <div class="modal-content">
           <div class="upperPosition">
             <div><h2 style="margin-top:0;">Edit Staff</h2></div>
-            <div><span class="closeModal">&times;</span></div>
+            <div><span class="closeEditStaffModal">&times;</span></div>
           </div>
           <form id="editStaffForm" method="POST" action="updateStaff.php">
             <input type="hidden" name="id" id="editStaffID">
             <label for="LastName">Last Name</label><br>
-            <input type="text" id="editLastName" name="LastName" required><br>
+            <input type="text" id="editStaffLastName" name="LastName" required><br>
 
             <label for="FirstName">First Name</label><br>
-            <input type="text" id="editFirstName" name="FirstName" required><br>
+            <input type="text" id="editStaffFirstName" name="FirstName" required><br>
 
             <label for="MiddleInitial">Middle Initial</label><br>
             <input type="text" id="editMiddleInitial" name="MiddleInitial"><br>
@@ -842,44 +841,7 @@
             </div>
           </form>
         </div>
-
-        <!-- edit select staff -->
-        <div id="editSelectStaffModal" class="modal selectModal">
-          <div class="modal-content">
-            <div class="selectStaffTop">
-              <h2>Select Staff</h2>
-              <span class="close" id="editCloseStaffModal">&times;</span>
-            </div>
-            <input type="text" id="editSearchStaff" placeholder="Search by name or contact...">
-            <div class="selectTable">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Staff ID</th>
-                    <th>Full Name</th>
-                    <th>Contact</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="editStaffTableBody">
-                  <?php
-                    $result = $con->query("SELECT id, FirstName, MiddleInitial, LastName, ContactNumber FROM staffrecords");
-                    while ($row = $result->fetch_assoc()) {
-                        $fullName = htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial']);
-                        echo '
-                          <tr>
-                              <td>' . htmlspecialchars($row['id']) . '</td>
-                              <td>' . $fullName . '</td>
-                              <td>' . htmlspecialchars($row['ContactNumber']) . '</td>
-                              <td><button type="button" onclick="selectEditStaff(' . $row['id'] . ', \'' . $fullName . '\', \'' . $row['ContactNumber'] . '\')">Select</button></td>
-                          </tr>
-                      ';
-                    }
-                  ?>
-                </tbody>
-              </table>
-            </div>
-          </div>   
+      </div>
     </div>
   </main>
 </div>
