@@ -281,7 +281,7 @@ tr:hover {
   max-height: 60vh;
   overflow-y: auto;
 }
-.modal{
+.modal {
   display: none;
   position: fixed;
   z-index: 1000;
@@ -293,7 +293,6 @@ tr:hover {
   align-items: center;
   justify-content: center;
 }
-
 .modal-content {
   background: #fff;
   padding: 2rem;
@@ -301,7 +300,6 @@ tr:hover {
   width: 50%;
   box-shadow: 0 2px 16px rgba(0,0,0,0.2);
 }
-
 #openAddCustomerModal {
   cursor:pointer;
 }
@@ -426,4 +424,98 @@ form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup,.c
   cursor: pointer;
   width: 100px;
   font-size: 16px;
+}
+
+
+/* Modal overlay */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4);
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal content box */
+.modal-content {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: 95vw;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Modal header and close button */
+.upperPosition {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.upperPosition h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+.upperPosition span,
+#closeAddUserModal, #closeAddCustomerModal, #closeRentInformation, .close {
+  cursor: pointer;
+  font-size: 2rem;
+  color: #888;
+  transition: color 0.2s;
+}
+.upperPosition span:hover,
+#closeAddUserModal:hover, #closeAddCustomerModal:hover, #closeRentInformation:hover, .close:hover {
+  color: #e74c3c;
+}
+
+/* Form fields inside modal */
+.modal-content form label {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+.modal-content form input,
+.modal-content form select {
+  width: 100%;
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #fafafa;
+  transition: border 0.2s;
+}
+.modal-content form input:focus,
+.modal-content form select:focus {
+  border: 1.5px solid #007bff;
+  outline: none;
+}
+
+/* Modal buttons */
+.modalButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+.modalButtons .add-btn,
+.modalButtons button[type="button"] {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  background: #007bff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.modalButtons .add-btn:hover,
+.modalButtons button[type="button"]:hover {
+  background: #0056b3;
 }

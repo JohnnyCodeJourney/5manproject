@@ -262,12 +262,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+  // ---------- ADD USER OR ADMIN MODAL ----------
+  const openAddUserModalBtn = document.getElementById('openAddUserModal');
+  const addUserModal = document.getElementById('addUserModal');
+  const closeAddUserModalBtn = document.getElementById('closeAddUserModal');
+  const cancelAddUserBtn = document.getElementById('cancelAddUser');
+
+  if (openAddUserModalBtn) {
+    openAddUserModalBtn.onclick = () => addUserModal.style.display = 'flex';
+  }
+  if (closeAddUserModalBtn) {
+    closeAddUserModalBtn.onclick = () => addUserModal.style.display = 'none';
+  }
+  if (cancelAddUserBtn) {
+    cancelAddUserBtn.onclick = (e) => {
+      e.preventDefault();
+      addUserModal.style.display = 'none';
+    };
+  }
 
 
-
-
-
-
-
-
+  
 });

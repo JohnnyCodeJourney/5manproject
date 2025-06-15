@@ -1,6 +1,7 @@
 <?php
   include('dbconnect.php');
   include('staffRecord.php');
+  include('addUser.php');
   session_start();
   if (!isset($_SESSION['email'])) {
     header("Location: index.php");
@@ -82,6 +83,15 @@
   }
   $salesRow = $salesResult->fetch_assoc();
   $totalSales = $salesRow['totalSales'] ?? 0;
+
+
+  //  adduser
+  $sql5 = "SELECT * FROM accounts";
+  $result5 = $con->query($sql5);
+  if (!$result5) {
+    die("Query failed: " . mysqli_error($con));
+  }
+
 ?>
 
 <!DOCTYPE html>
@@ -228,6 +238,8 @@
               
             </form>
         </div>
+
+
         <!-- TABLE -->
       </header>
         <div id="customerList">
@@ -772,33 +784,127 @@
   </div>
 
   <!-- PARA SA ADDING NG USER OR ADMIN -->
-  <div class="section" id="userSection">
-    <h2>Add New Staff/Admin</h2>
-    <form action="addUser.php" method="POST">
-      <label for="username">Username</label>
-      <input type="text" id="username" name="username" required>
+<div class="section" id="userSection">
+  <main class="main-content" id="dashboardSection">
+    <header class="dashboard-header">
+      <div class="welcome-section">
+        <h1>Welcome, <?php echo htmlspecialchars($username) ?></h1>
+        <p>Here's what's happening today.</p>
+      </div>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
+      <div class="add-customer" id="openAddUserModal">
+        <span>Add New Staff/Admin</span>
+        <img src="../assets/icons/plus-solid.svg" alt="add icon" class="add-icon">
+      </div>
+    </header>
+    <!-- You can add your user/admin table or content here -->
+    <!-- table -->
+            <div id="customerList">
+          <h2>Staff and Admin List</h2>
+          <input type="text" id="searchCustomer1" placeholder="Search by name or contact...">
+          <?php
+            if ($result5 && $result5->num_rows > 0) {
+            echo '
+              <div class="tableDiv">
+                <table>
+                  <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Role</th>
+                        <th>Username</th>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required>
+                        <th class="actionsTD" >Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody id="customerTableBody1">
+                ';
+          while ($row5 = $result5->fetch_assoc()) {
+              echo '
+                <tr>
+                    <td>' . htmlspecialchars($row5['id']) . '</td>
+                    <td>' . htmlspecialchars($row5['email']) . '</td>
+                    <td>' . htmlspecialchars($row5['password']) . '</td>
+                    <td>' . htmlspecialchars($row5['role']) . '</td>
+                    <td>' . htmlspecialchars($row5['username']) . '</td>
+                    <td class="actionsTD">
+                      <div class="actionsDiv">
+                        <div>
+                            <button type="button" class="actionBtn editBtn"
+                              data-id="' . htmlspecialchars($row5['id']) . '"
+                              data-email="' . htmlspecialchars($row5['email']) . '"
+                              data-password="' . htmlspecialchars($row5['password']) . '"
+                              data-role="' . htmlspecialchars($row5['role']) . '"
+                              data-username="' . htmlspecialchars($row5['username']) . '">
+                              <img src="../assets/icons/edit.png" alt="edit">
+                          </button>
+                        </div>
+                        <div>
+                          <form action="deleteCustomer.php" method="POST" onsubmit="return confirm(\'Are you sure you want to remove this record?\');">
+                            <input type="hidden" name="DelID" value="' . htmlspecialchars($row5['id']) . '">
+                            <button type="submit" class="actionBtn">
+                              <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn">
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </td>
+                </tr>
+            ';
+              }
+              echo '
+                    </tbody>
+                  </table>
+                  </div>
+                  ';
+            } else {
+                echo '<p class="noRecords">No records found.</p>';
+            }
 
-      <label for="role">Role</label>
-      <select id="role" name="role" required>
-        <option value="Staff">Staff</option>
-        <option value="Admin">Admin</option>
-      </select>
+          ?>
 
-      <button type="submit">Add User</button>
-    </form>
+          
+          <!-- Add User Modal -->
+  <div id="addUserModal" class="modal">
+    <div class="modal-content">
+      <div class="upperPosition">
+        <div><h2 style="margin-top:0;">Add New Staff/Admin</h2><br></div>
+        <div><span id="closeAddUserModal">&times;</span></div>
+      </div>
+      <form action="addUser.php" method="POST">
+        <label for="username">Username</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="email">Email</label><br>
+        <input type="email" id="email" name="email" required><br>
+        <label for="password">Password</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <label for="role">Role</label><br>
+        <select id="role" name="role" required>
+          <option value="Staff">Staff</option>
+          <option value="Admin">Admin</option>
+        </select><br>
+        <div class="modalButtons">
+          <button type="submit" class="add-btn">Add User</button>
+          <button id="cancelAddUser" type="button">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
+
+
+    
+  </main>
+</div>
+
+
+
+
+  
 
 <!-- SCRIPT PARA SA BUONG HOMEPAGE NAKA BUKOD NG FILE PARA MAS ATTRACTIVE TINGNAN  -->
   <script src="../js/homepage.js" defer></script>
   <script src="../js/addModal.js" defer></script>
-</body>
-</html>
 
 <div class="section" id="settingsSection" style="display:none;">
   <main class="main-content" id="dashboardSection">
@@ -826,4 +932,5 @@
 <!-- DILI KO PA PO NAAYOS YUNG RECORD NA PART, DI KO ALAM KUNG PANO GAWIN -->
 
 
-
+</body>
+</html>
