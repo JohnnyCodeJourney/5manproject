@@ -85,6 +85,26 @@ document.addEventListener('DOMContentLoaded', () => {
       staffModal.style.display = 'none';
     };
   }
+  // ---------- EDIT STAFF ----------
+  document.querySelectorAll('.editStaffBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('editStaffID').value = btn.dataset.id;
+      document.getElementById('editStaffLastName').value = btn.dataset.lastname;
+      document.getElementById('editStaffFirstName').value = btn.dataset.firstname;
+      document.getElementById('editMiddleInitial').value = btn.dataset.minit;
+      document.getElementById('editAddress').value = btn.dataset.address;
+      document.getElementById('editContactNumber').value = btn.dataset.contact;
+      document.getElementById('editSalary').value = btn.dataset.salary;
+
+      document.getElementById('editStaffModal').style.display = 'flex';
+    });
+  });
+  const closeEditStaffModal = document.querySelector('.closeEditStaffModal');
+  if (closeEditStaffModal) {
+    closeEditStaffModal.addEventListener('click', () => {
+      document.getElementById('editStaffModal').style.display = 'none';
+    });
+  }
 
 
   // ---------- SELECT CUSTOMER MODAL ----------
