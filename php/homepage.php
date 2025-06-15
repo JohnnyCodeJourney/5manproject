@@ -940,7 +940,7 @@
                           </button>
                         </div>
                         <div>
-                          <form action="deleteCustomer.php" method="POST" onsubmit="return confirm(\'Are you sure you want to remove this record?\');">
+                          <form action="deleteUser.php" method="POST" onsubmit="return confirm(\'Are you sure you want to remove this record?\');">
                             <input type="hidden" name="DelID" value="' . htmlspecialchars($row5['id']) . '">
                             <button type="submit" class="actionBtn">
                               <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn">
@@ -1016,6 +1016,7 @@
   </div>
 </div>
   <!-- Delete User Modal -->
+
 
 
     
