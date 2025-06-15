@@ -148,14 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---------- SHARED WINDOW CLOSE FOR MODALS ----------
-  window.onclick = (event) => {
-    if (event.target === customerModal) customerModal.style.display = 'none';
-    if (event.target === addRentalsModal) addRentalsModal.style.display = 'none';
-    if (event.target === modalSelect) modalSelect.style.display = 'none';
-    if (event.target === document.getElementById('editModal')) document.getElementById('editModal').style.display = 'none';
-  };
-
 
 
   // rental edit
@@ -269,14 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  const originalWindowClick = window.onclick;
-  window.onclick = function(event) {
-    if (originalWindowClick) originalWindowClick(event);
-    if (event.target === editCustomerModal) editCustomerModal.style.display = 'none';
-    if (event.target === document.getElementById('EditRentalsModal')) {
-      document.getElementById('EditRentalsModal').style.display = 'none';
-    }
-  };
+
 
 
 
