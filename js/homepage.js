@@ -119,6 +119,7 @@ rateInput.addEventListener('input', updateTotalAndEndDate);
 daysInput.addEventListener('input', updateTotalAndEndDate);
 dateStartInput.addEventListener('input', updateTotalAndEndDate);
 
+// daily sales
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('dateFilterForm');
     const rentalsCount = document.getElementById('rentals-count');
@@ -157,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Load today's data on page load
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toLocaleDateString('en-CA');
     document.getElementById('dateSelection').value = today;
     loadData(today);
 });

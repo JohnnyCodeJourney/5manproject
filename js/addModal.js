@@ -18,14 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // ---------- RENTAL MODAL ----------
-  const openRentalModal = document.getElementById('openAddRentals');
-  const addRentalsModal = document.getElementById('addRentalsModal');
-  const closeRentalModalBtn = document.getElementById('closeRentInformation');
-  const cancelRentBtn = document.getElementById('cancelRent');
-  const searchInput1 = document.getElementById('searchCustomer1');
-  
-  
+    // Customer Search
   if (searchInput1) {
     searchInput1.addEventListener('input', function () {
       const filter1 = this.value.toLowerCase();
@@ -36,6 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // ---------- RENTAL MODAL ----------
+  const openRentalModal = document.getElementById('openAddRentals');
+  const addRentalsModal = document.getElementById('addRentalsModal');
+  const closeRentalModalBtn = document.getElementById('closeRentInformation');
+  const cancelRentBtn = document.getElementById('cancelRent');
+  const searchInput1 = document.getElementById('searchCustomer1');
+  
+
 
   if (openRentalModal) {
     openRentalModal.onclick = () => addRentalsModal.style.display = 'flex';
@@ -50,9 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  // Rental list search bar
   const searchInput2 = document.getElementById('searchCustomer2');
-  
-  
   if (searchInput2) {
     searchInput2.addEventListener('input', function () {
       const filter2 = this.value.toLowerCase();
@@ -113,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   window.selectCustomer = selectCustomer; // expose to global
 
+  // select customer search bar
   const searchInput = document.getElementById('searchCustomer');
   if (searchInput) {
     searchInput.addEventListener('input', function () {
@@ -195,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-
+  // edit rent info search bar
   const searchInput3 = document.getElementById('EditsearchCustomer');
   if (searchInput3) {
     searchInput3.addEventListener('input', function() {
