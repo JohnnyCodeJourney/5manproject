@@ -900,7 +900,7 @@
     <!-- table -->
             <div id="customerList">
           <h2>Staff and Admin List</h2>
-          <input type="text" id="searchCustomer1" placeholder="Search by name or contact...">
+          <input type="text" id="searchCustomer5" placeholder="Search by name or contact...">
           <?php
             if ($result5 && $result5->num_rows > 0) {
             echo '
@@ -917,7 +917,7 @@
                         <th class="actionsTD" >Actions</th>
                       </tr>
                   </thead>
-                  <tbody id="customerTableBody1">
+                  <tbody id="customerTableBody5">
                 ';
           while ($row5 = $result5->fetch_assoc()) {
               echo '
@@ -930,7 +930,7 @@
                     <td class="actionsTD">
                       <div class="actionsDiv">
                         <div>
-                            <button type="button" class="actionBtn editBtn"
+                            <button type="button" class="actionBtn editUserBtn"
                               data-id="' . htmlspecialchars($row5['id']) . '"
                               data-email="' . htmlspecialchars($row5['email']) . '"
                               data-password="' . htmlspecialchars($row5['password']) . '"
@@ -990,6 +990,32 @@
       </form>
     </div>
   </div>
+
+  <!-- Edit User Modal -->
+<div id="editUserModal" class="modal">
+  <div class="modal-content">
+    <div class="upperPosition">
+      <div><h2 style="margin-top:0;">Edit Staff/Admin</h2></div>
+      <div><span class="closeUserModal">&times;</span></div>
+    </div>
+    <form action="updateUser.php" method="POST">
+      <input type="hidden" id="editUserID" name="id">
+      <label for="editUsername">Username</label><br>
+      <input type="text" id="editUsername" name="username" required><br>
+      <label for="editPassword">Password</label><br>
+      <input type="text" id="editPassword" name="password" required><br>
+      <label for="editRole">Role</label><br>
+      <select id="editRole" name="role" required>
+        <option value="Staff">Staff</option>
+        <option value="Admin">Admin</option>
+      </select><br>
+      <div class="modalButtons">
+        <button type="submit" class="add-btn">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+  <!-- Delete User Modal -->
 
 
     
