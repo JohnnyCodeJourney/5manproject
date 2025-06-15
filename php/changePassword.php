@@ -8,15 +8,16 @@ $oldPassword = $_POST['oldPassword'] ?? '';
 $newPassword = $_POST['newPassword'] ?? '';
 $confirmPassword = $_POST['confirmPassword'] ?? '';
 
+// Check if new passwords match
 if ($newPassword !== $confirmPassword) {
     echo "<script>
-        window.history.back();
         alert('New passwords do not match.');
+        window.history.back();
     </script>";
     exit;
 }
 
-// Fetch current password from DB (plain text)
+// Fetch current password from DB (plain text for now)
 $stmt = $con->prepare("SELECT password FROM accounts WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -26,25 +27,27 @@ $stmt->close();
 
 if (!$currentPassword || $oldPassword !== $currentPassword) {
     echo "<script>
-        window.history.back();
         alert('Old password is incorrect.');
+        window.history.back();
     </script>";
     exit;
 }
 
-// Update password (plain text)
+// Update password (plain text – not recommended for production)
 $stmt = $con->prepare("UPDATE accounts SET password = ? WHERE email = ?");
 $stmt->bind_param("ss", $newPassword, $email);
 
 if ($stmt->execute()) {
+    session_destroy();
     echo "<script>
         alert('Password changed successfully!');
-        window.location.href = 'homepage.php';
+        window.location.href = 'index.php';
     </script>";
+    exit;
 } else {
     echo "<script>
-        window.history.back();
         alert('Error updating password.');
+        window.history.back();
     </script>";
 }
 $stmt->close();
