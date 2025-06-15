@@ -85,8 +85,8 @@
   $totalSales = $salesRow['totalSales'] ?? 0;
 
 
-  //  adduser
-  $sql5 = "SELECT * FROM accounts";
+  //  add user
+  $sql5 = "SELECT * FROM accounts WHERE email != '$email'";
   $result5 = $con->query($sql5);
   if (!$result5) {
     die("Query failed: " . mysqli_error($con));
@@ -1015,7 +1015,6 @@
     </form>
   </div>
 </div>
-  <!-- Delete User Modal -->
 
 
 
