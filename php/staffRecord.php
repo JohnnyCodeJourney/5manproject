@@ -7,13 +7,13 @@
     $generatedId = 2025 . ($row['count'] + 1);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $staffId = $_POST['staff_id'];
-        $lastName = $_POST['last_name'];
-        $firstName = $_POST['first_name'];
-        $middleInitial = $_POST['middle_initial'];
-        $address = $_POST['address'];
-        $contactNumber = $_POST['contact_number'];
-        $monthlySalary = $_POST['monthly_salary'];
+        $staffId = $_POST['id'];
+        $lastName = $_POST['LastName'];
+        $firstName = $_POST['FirstName'];
+        $middleInitial = $_POST['MiddleInitial'];
+        $address = $_POST['Address'];
+        $contactNumber = $_POST['ContactNumber'];
+        $monthlySalary = $_POST['Salary'];
 
         $sql = "INSERT INTO staffrecords 
                 VALUES ('$staffId', '$lastName', '$firstName', '$middleInitial', '$address', '$contactNumber', '$monthlySalary')";

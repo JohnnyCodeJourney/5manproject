@@ -678,62 +678,199 @@
     </main>
   </div>
 
-  <!-- PARA SA STAFF RECORD -->
-  <div class="section" id="recordStaff">
-    <main class="main-content" id="dashboardSection">
-      <header class="dashboard-header">
-        <div class="welcome-section">
-            <h1>Welcome, <?php echo htmlspecialchars($username) ?></h1>
-            <p>Here's what's happening today.</p>
-        </div>
+<!-- PARA SA STAFF RECORD -->
+<div class="section" id="recordStaff">
+  <main class="main-content" id="dashboardSection">
+    <header class="dashboard-header">
+      <div class="welcome-section">
+          <h1>Welcome, <?php echo htmlspecialchars($username) ?></h1>
+          <p>Here's what's happening today.</p>
+      </div>
 
-        <div class="add-customer addStaff" id="openAddStaffModal">
-            <span>Add Staff</span>
-            <img src="../assets/icons/plus-solid.svg" alt="add icon" class="add-icon">
-        </div>
+      <div class="add-customer addStaff" id="openAddStaffModal">
+          <span>Add Staff</span>
+          <img src="../assets/icons/plus-solid.svg" alt="add icon" class="add-icon">
+      </div>
 
-        <!-- add staff modal -->
-        <div class="modal" id="addStaffModal">
-          <div class="modal-content">
-           <div class="upperPosition">
-              <div><h2 style="margin-top:0;">Add Staff</h><br></div>
-              <div><span id="closeAddStaffModal">&times;</span></div>
+      <!-- add staff modal -->
+      <div class="modal" id="addStaffModal">
+        <div class="modal-content">
+         <div class="upperPosition">
+            <div><h2 style="margin-top:0;">Add Staff</h2></div>
+            <div><span id="closeAddStaffModal">&times;</span></div>
+          </div>
+          <form action="staffRecord.php" method="POST">
+            <label for="id">Staff ID</label><br>
+            <input type="text" value="<?php echo $generatedId; ?>" disabled readonly><br>
+            <input type="hidden" name="id" value="<?php echo $generatedId; ?>">
+
+            <label for="LastName">Last Name</label><br>
+            <input type="text" id="LastName" name="LastName" required><br>
+
+            <label for="FirstName">First Name</label><br>
+            <input type="text" id="FirstName" name="FirstName" required><br>
+
+            <label for="MiddleInitial">Middle Initial</label><br>
+            <input type="text" id="MiddleInitial" name="MiddleInitial"><br>
+
+            <label for="Address">Address</label><br>
+            <input type="text" id="Address" name="Address" required><br>
+
+            <label for="ContactNumber">Contact Number</label><br>
+            <input type="text" id="ContactNumber" name="ContactNumber" required><br>
+
+            <label for="Salary">Monthly Salary</label><br>
+            <input type="number" id="Salary" name="Salary" required><br>
+
+            <div class="modalButtons">
+              <button type="submit" class="add-btn">Add</button>
+              <button id="cancelStaffBTN" type="button">Cancel</button>
             </div>
-            <form action="staffRecord.php" method="POST">
-              <label for="staff_id">Staff ID</label><br>
-              <input type="text" value="<?php echo $generatedId; ?>" disabled readonly><br>
-              <input type="hidden" name="staff_id" value="<?php echo $generatedId; ?>">
+          </form>         
+        </div>          
+      </div>
+    </header>
 
-              <label for="last_name">Last Name</label><br>
-              <input type="text" id="last_name" name="last_name" required><br>
+    <!-- TABLE -->
+    <div id="staffList">
+      <h2>Staff List</h2>
+      <input type="text" id="searchStaff" placeholder="Search by name or contact...">
 
-              <label for="first_name">First Name</label><br>
-              <input type="text" id="first_name" name="first_name" required><br>
+      <?php
+        if ($staffResult->num_rows > 0) {
+          echo '
+            <div class="tableDiv">
+              <table>
+                <thead>
+                    <tr>
+                      <th>Staff ID</th>
+                      <th>Full Name</th>
+                      <th>Address</th>
+                      <th>Contact Number</th>
+                      <th>Monthly Salary</th>
+                      <th class="actionsTD">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="staffTableBody">
+          ';
+          while ($row = $staffResult->fetch_assoc()) {
+              echo '
+                <tr>
+                    <td>' . htmlspecialchars($row['id']) . '</td>
+                    <td>' . htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial']) . '</td>
+                    <td>' . htmlspecialchars($row['Address']) . '</td>
+                    <td>' . htmlspecialchars($row['ContactNumber']) . '</td>
+                    <td>' . htmlspecialchars($row['Salary']) . '</td>
+                    <td class="actionsTD">
+                      <div class="actionsDiv">
+                        <div>
+                            <button type="button" class="actionBtn editStaffBtn"
+                              data-id="' . htmlspecialchars($row['id']) . '"
+                              data-lname="' . htmlspecialchars($row['LastName']) . '"
+                              data-fname="' . htmlspecialchars($row['FirstName']) . '"
+                              data-minit="' . htmlspecialchars($row['MiddleInitial']) . '"
+                              data-address="' . htmlspecialchars($row['Address']) . '"
+                              data-contact="' . htmlspecialchars($row['ContactNumber']) . '"
+                              data-salary="' . htmlspecialchars($row['Salary']) . '">
+                              <img src="../assets/icons/edit.png" alt="edit">
+                          </button>
+                        </div>
+                        <div>
+                          <form action="deleteStaff.php" method="POST" onsubmit="return confirm(\'Are you sure you want to remove this record?\');">
+                            <input type="hidden" name="DelID" value="' . htmlspecialchars($row['id']) . '">
+                            <button type="submit" class="actionBtn">
+                              <img src="../assets/icons/delete.png" alt="delete" class="deleteBtn">
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </td>
+                </tr>
+              ';
+          }
+          echo '
+                </tbody>
+              </table>
+            </div>
+          ';
+        } else {
+          echo '<p>No staff records found.</p>';
+        }
+      ?>
 
-              <label for="middle_initial">Middle Initial</label><br>
-              <input type="text" id="middle_initial" name="middle_initial"><br>
+      <!-- edit staff Modal -->
+      <div id="editStaffModal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <div class="upperPosition">
+            <div><h2 style="margin-top:0;">Edit Staff</h2></div>
+            <div><span class="closeModal">&times;</span></div>
+          </div>
+          <form id="editStaffForm" method="POST" action="updateStaff.php">
+            <input type="hidden" name="id" id="editStaffID">
+            <label for="LastName">Last Name</label><br>
+            <input type="text" id="editLastName" name="LastName" required><br>
 
-              <label for="address">Address</label><br>
-              <input type="text" id="address" name="address" required><br>
+            <label for="FirstName">First Name</label><br>
+            <input type="text" id="editFirstName" name="FirstName" required><br>
 
-              <label for="contact_number">Contact Number</label><br>
-              <input type="text" id="contact_number" name="contact_number" required><br>
+            <label for="MiddleInitial">Middle Initial</label><br>
+            <input type="text" id="editMiddleInitial" name="MiddleInitial"><br>
 
-              <label for="monthly_salary">Monthly Salary</label><br>
-              <input type="number" id="monthly_salary" name="monthly_salary" required><br>
+            <label for="Address">Address</label><br>
+            <input type="text" id="editAddress" name="Address" required><br>
 
-              <div class="modalButtons">
-                <button type="submit" class="add-btn">Add</button>
-                <button id="cancelStaffBTN" type="button">Cancel</button>
-              </div>
-            </form>         
-          </div>          
+            <label for="ContactNumber">Contact Number</label><br>
+            <input type="text" id="editContactNumber" name="ContactNumber" required><br>
+
+            <label for="Salary">Monthly Salary</label><br>
+            <input type="number" id="editSalary" name="Salary" required><br>
+
+            <div class="modalButtons">
+              <button type="submit">Save Changes</button>
+            </div>
+          </form>
         </div>
 
-
-      </header>
-    </main>
-  </div>
+        <!-- edit select staff -->
+        <div id="editSelectStaffModal" class="modal selectModal">
+          <div class="modal-content">
+            <div class="selectStaffTop">
+              <h2>Select Staff</h2>
+              <span class="close" id="editCloseStaffModal">&times;</span>
+            </div>
+            <input type="text" id="editSearchStaff" placeholder="Search by name or contact...">
+            <div class="selectTable">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Staff ID</th>
+                    <th>Full Name</th>
+                    <th>Contact</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="editStaffTableBody">
+                  <?php
+                    $result = $con->query("SELECT id, FirstName, MiddleInitial, LastName, ContactNumber FROM staffrecords");
+                    while ($row = $result->fetch_assoc()) {
+                        $fullName = htmlspecialchars($row['LastName'] . ', ' . $row['FirstName'] . ' ' . $row['MiddleInitial']);
+                        echo '
+                          <tr>
+                              <td>' . htmlspecialchars($row['id']) . '</td>
+                              <td>' . $fullName . '</td>
+                              <td>' . htmlspecialchars($row['ContactNumber']) . '</td>
+                              <td><button type="button" onclick="selectEditStaff(' . $row['id'] . ', \'' . $fullName . '\', \'' . $row['ContactNumber'] . '\')">Select</button></td>
+                          </tr>
+                      ';
+                    }
+                  ?>
+                </tbody>
+              </table>
+            </div>
+          </div>   
+    </div>
+  </main>
+</div>
 
 
   <!-- PARA SA DAILY SALES -->

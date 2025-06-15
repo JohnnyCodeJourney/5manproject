@@ -66,22 +66,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
    // ---------- ADD Staff MODAL ----------
   const openStaffModalBtn = document.getElementById('openAddStaffModal');
-  const StaffModal = document.getElementById('addStaffModal');
+  const staffModal = document.getElementById('addStaffModal');      
   const closeStaffModalBtn = document.getElementById('closeAddStaffModal');
-  const cancelStaffBtn = document.getElementById('cancelStaffBTN');
-
+  const cancelStaffBtn = document.getElementById('cancelStaffBTN'); 
   if (openStaffModalBtn) {
-    openStaffModalBtn.onclick = () => StaffModal.style.display = 'flex';
+    openStaffModalBtn.onclick = () => staffModal.style.display = 'flex';
   }
   if (closeStaffModalBtn) {
-    closeStaffModalBtn.onclick = () => StaffModal.style.display = 'none';
+    closeStaffModalBtn.onclick = () => staffModal.style.display = 'none';
   }
   if (cancelStaffBtn) {
     cancelStaffBtn.onclick = (e) => {
       e.preventDefault();
-      StaffModal.style.display = 'none';
+      staffModal.style.display = 'none';
     };
   }
+
 
   // ---------- SELECT CUSTOMER MODAL ----------
   const modalSelect = document.getElementById("selectCustomerModal");
