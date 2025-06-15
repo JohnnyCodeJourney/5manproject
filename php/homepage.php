@@ -39,6 +39,15 @@
   $row2 = $result2->fetch_assoc();
   $totalCustomer = $row2['totalCustomer'];
 
+  // total staff
+  $sqlStaff = "SELECT COUNT(*) as totalStaff FROM staffrecords";
+  $staffCountResult = $con->query($sqlStaff);
+  if (!$staffCountResult) {
+    die("Query failed: " . mysqli_error($con));
+  }
+  $staffCountRow = $staffCountResult->fetch_assoc();
+  $totalStaff = $staffCountRow['totalStaff'] ?? 0;
+
   // total rentals today
   $rentalCountSql = "SELECT COUNT(*) as totalRentals FROM rental where DATE(addedDate) = CURDATE()";
   $rentalCountResult = $con->query($rentalCountSql);
@@ -51,7 +60,8 @@
 
   //rental info
   $sql3 = "SELECT r.rentalID, c.customerID, CONCAT(c.firstName, ' ', c.lastName) AS fullName, c.contact,
-          r.carType, r.ratePerDay, r.numberOfDays, r.total, r.dateStart, CONCAT(DATE_FORMAT(r.dateStart, '%b %d, %Y'), ' - ', DATE_FORMAT(r.dateEnd, '%b %d, %Y')) AS dateDuration, r.addedBy
+          r.carType, r.ratePerDay, r.numberOfDays, r.total, r.dateStart, CONCAT(DATE_FORMAT(r.dateStart, '%b %d, %Y'), ' - ', DATE_FORMAT(r.dateEnd, '%b %d, %Y')) AS dateDuration, 
+          DATE_FORMAT(r.addedDate, '%b %d, %Y') AS addedDateWord ,r.addedBy
         FROM rental r JOIN customerinfo c ON r.customerID = c.customerID ORDER BY r.dateStart DESC";
   $result3 = $con->query($sql3);
   if (!$result3) {
@@ -63,6 +73,15 @@
   if (!$staffResult) {
     die("Query failed: " . mysqli_error($con));
   }
+
+  // Dashboard Sales today
+  $salesSql = "SELECT SUM(total) as totalSales FROM rental WHERE DATE(addedDate) = CURDATE()";
+  $salesResult = $con->query($salesSql);
+  if (!$salesResult) {
+    die("Query failed: " . mysqli_error($con));
+  }
+  $salesRow = $salesResult->fetch_assoc();
+  $totalSales = $salesRow['totalSales'] ?? 0;
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +140,7 @@
         </div>
         <div class="card">
           <h3>Total Staff</h3>
-          <p>7</p>
+          <p><?php echo htmlspecialchars($totalStaff) ?></p>
         </div>
         <div class="card">
           <h3>Rentals Today</h3>
@@ -129,7 +148,7 @@
         </div>
         <div class="card">
           <h3>Sales Today</h3>
-          <p>₱18,000</p>
+          <p><?php echo'₱'; echo  htmlspecialchars($totalSales) ?></p> 
         </div>
       </section>
     </main>
@@ -482,8 +501,9 @@
                         <th>Rate Per Day</th>
                         <th>Number of Days</th>
                         <th>Total</th>
-                        <th>Date Duration</th>
+                        <th>Rent Duration</th>
                         <th>Added by</th>
+                        <th>Added Date</th>
                         <th class="actionsTD" >Actions</th>
                       </tr>
                   </thead>
@@ -500,6 +520,7 @@
                           <td>' . htmlspecialchars($row3['total']) . '</td>
                           <td>' . htmlspecialchars($row3['dateDuration']) . '</td>
                           <td>' . htmlspecialchars($row3['addedBy']) . '</td>
+                          <td>' . htmlspecialchars($row3['addedDateWord']) . '</td>
                           <td class="actionsTD">
                             <div class="actionsDiv">
                               <div class="actionsDiv">
