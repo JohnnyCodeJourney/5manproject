@@ -281,6 +281,37 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+    // search functionality for USER AND ADMIN //
+    const searchInput5 = document.getElementById('searchCustomer5');
+    if (searchInput5) {
+    searchInput5.addEventListener('input', function() {
+      const filter = this.value.toLowerCase();
+      const rows = document.querySelectorAll('#customerTableBody5 tr');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(filter) ? '' : 'none';
+      });
+    });
+  }
 
-  
+    // edit functionality for USER AND ADMIN //
+  document.querySelectorAll('.editUserBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('editUserID').value = btn.dataset.id;
+      document.getElementById('editUsername').value = btn.dataset.username;
+      document.getElementById('editPassword').value = btn.dataset.password;
+      document.getElementById('editRole').value = btn.dataset.role;
+
+      document.getElementById('editUserModal').style.display = 'flex';
+    });
+  });
+  const closeEditUserModal = document.querySelector('.closeUserModal');
+  if (closeEditUserModal) {
+    closeEditUserModal.addEventListener('click', () => {
+      document.getElementById('editUserModal').style.display = 'none';
+    });
+  }
+
+
+
 });
