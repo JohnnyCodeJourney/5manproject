@@ -19,6 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
     // Customer Search
+    const searchInput1 = document.getElementById('searchCustomer1');
+
+    
   if (searchInput1) {
     searchInput1.addEventListener('input', function () {
       const filter1 = this.value.toLowerCase();
@@ -35,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const addRentalsModal = document.getElementById('addRentalsModal');
   const closeRentalModalBtn = document.getElementById('closeRentInformation');
   const cancelRentBtn = document.getElementById('cancelRent');
-  const searchInput1 = document.getElementById('searchCustomer1');
+
   
 
 
