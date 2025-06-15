@@ -345,6 +345,7 @@ form .name .nameGroup, .addressgroup,.cargroup div,.totalgroup div,.dategroup,.c
 .actionsDiv{
   display: flex;
   flex-direction: row;
+  justify-content: center;
   gap: 2%;
 }
 #editModal{
