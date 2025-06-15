@@ -21,7 +21,8 @@
         $row_user = $result_user->fetch_assoc();
         $added_by = $row_user['username'];
 
-        $sql = "INSERT INTO customerinfo VALUES ('','$lname', '$fname', '$mname', '$province','$city', '$barangay', '$detailedAdd', '$contact','$added_by')";
+        $sql = "INSERT INTO customerinfo (lastName, firstName, middleName, province, city, barangay, detailedAddress, contact, addedBy) 
+        VALUES ('$lname', '$fname', '$mname', '$province','$city', '$barangay', '$detailedAdd', '$contact','$added_by')";
         
         if (mysqli_query($con, $sql)) {
 
