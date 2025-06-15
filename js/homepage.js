@@ -119,6 +119,7 @@ rateInput.addEventListener('input', updateTotalAndEndDate);
 daysInput.addEventListener('input', updateTotalAndEndDate);
 dateStartInput.addEventListener('input', updateTotalAndEndDate);
 
+// daily sales
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('dateFilterForm');
     const rentalsCount = document.getElementById('rentals-count');
