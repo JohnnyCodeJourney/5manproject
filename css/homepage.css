@@ -268,7 +268,7 @@ tr:hover {
 }
 
 /* Add Customer Modal Styling */
-#customerList, #rentalList, #dailySales,#staffList{
+#customerList, #rentalList, #dailySales{
   padding: 20px;
   background-color: white;
   margin-top: 30px;
