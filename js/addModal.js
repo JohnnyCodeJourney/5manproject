@@ -335,6 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.editUserBtn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.getElementById('editUserID').value = btn.dataset.id;
+      document.getElementById('editemail').value = btn.dataset.email;
       document.getElementById('editUsername').value = btn.dataset.username;
       document.getElementById('editPassword').value = btn.dataset.password;
       document.getElementById('editRole').value = btn.dataset.role;

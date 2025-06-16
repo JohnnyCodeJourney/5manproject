@@ -12,8 +12,11 @@
     $sql = "UPDATE staffrecords SET LastName=?, FirstName=?, MiddleInitial=?, Address=?, ContactNumber=?, Salary=? WHERE id=?";
     $stmt = $con->prepare($sql);
     $stmt->bind_param("ssssssi", $LastName, $FirstName, $MiddleInitial, $Address, $ContactNumber, $Salary, $id);
-    $stmt->execute();
-
-    header("Location: homepage.php");
+    if ($stmt->execute()) {
+        echo "<script>alert('Staff updated successfully!'); window.location.href='homepage.php';</script>";
+    } else {
+        echo "<script>alert('Update failed!'); window.history.back();</script>";
+    }
+    $stmt->close();
     exit();
 ?>

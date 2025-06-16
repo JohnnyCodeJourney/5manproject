@@ -125,7 +125,7 @@
           <li id="staff_button" class="navItem">Staff</li>
           <li id="reports_button" class="navItem">Daily Sales</li>
           <li id="users_button" class="navItem">Add Users</li>
-          <li id="settings_button" class="navItem">Settings</li>
+          <li id="settings_button" class="navItem">Change Password</li>
         </ul>
       </nav>
       <div class="Logout">
@@ -910,7 +910,6 @@
                       <tr>
                         <th>ID</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Role</th>
                         <th>Username</th>
 
@@ -924,7 +923,6 @@
                 <tr>
                     <td>' . htmlspecialchars($row5['id']) . '</td>
                     <td>' . htmlspecialchars($row5['email']) . '</td>
-                    <td>' . htmlspecialchars($row5['password']) . '</td>
                     <td>' . htmlspecialchars($row5['role']) . '</td>
                     <td>' . htmlspecialchars($row5['username']) . '</td>
                     <td class="actionsTD">
@@ -1000,10 +998,11 @@
     </div>
     <form action="updateUser.php" method="POST">
       <input type="hidden" id="editUserID" name="id">
+      <label for="email">Email</label><br>
+      <input type="email" id="editemail" name="email" required><br>
       <label for="editUsername">Username</label><br>
       <input type="text" id="editUsername" name="username" required><br>
-      <label for="editPassword">Password</label><br>
-      <input type="text" id="editPassword" name="password" required><br>
+      <input type="text" id="editPassword" name="password" hidden><br>
       <label for="editRole">Role</label><br>
       <select id="editRole" name="role" required>
         <option value="Staff">Staff</option>
