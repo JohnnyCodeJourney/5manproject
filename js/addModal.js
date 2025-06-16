@@ -85,6 +85,18 @@ document.addEventListener('DOMContentLoaded', () => {
       staffModal.style.display = 'none';
     };
   }
+    // staff search bar
+  const searchStaff = document.getElementById('searchStaff');
+  if (searchStaff) {
+    searchStaff.addEventListener('input', function () {
+      const filter = this.value.toLowerCase();
+      const rows = document.querySelectorAll('#staffTableBody tr');
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(filter) ? '' : 'none';
+      });
+    });
+  }
   // ---------- EDIT STAFF ----------
   document.querySelectorAll('.editStaffBtn').forEach(btn => {
     btn.addEventListener('click', () => {
